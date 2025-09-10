@@ -18,6 +18,7 @@ const config: Config = {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'primary-gradient': 'linear-gradient(90deg, #0e3e33,#0e3e33 30%,#0b2b29 50%,#0b2b29)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

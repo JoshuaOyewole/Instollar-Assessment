@@ -38,12 +38,13 @@ body {
   background: #94a3b8;
 }
 
-
-
 /* Custom grid background pattern */
 .bg-grid-slate-100 {
-  background-image: 
-    linear-gradient(90deg, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+  background-image: linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 0.04) 1px,
+      transparent 1px
+    ),
     linear-gradient(rgba(15, 23, 42, 0.04) 1px, transparent 1px);
   background-size: 20px 20px;
 }
@@ -57,7 +58,13 @@ body {
 
 /* Enhanced button hover effects */
 .btn-primary {
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(
+    135deg,
+    #0e3e33,
+    #0e3e33 30%,
+    #0b2b29 50%,
+    #0b2b29
+  );
   transition: all 0.3s ease;
 }
 
@@ -74,7 +81,7 @@ body {
 }
 
 .nav-link::before {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -90,7 +97,8 @@ body {
 
 /* Animation for floating elements */
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -118,6 +126,12 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
-
-
+.gradient {
+  background: linear-gradient(
+    90deg,
+    #0e3e33,
+    #0e3e33 30%,
+    #0b2b29 50%,
+    #0b2b29
+  );
+}
