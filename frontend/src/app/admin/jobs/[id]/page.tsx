@@ -58,7 +58,7 @@ export default function JobDetailsPage() {
     try {
       const response = await matchesAPI.getMyMatches();
       const myMatches = response.data.data || [];
-      const hasAppliedToThisJob = myMatches.some((match: any) => 
+      const hasAppliedToThisJob = myMatches.some((match: any) =>
         match.jobId._id === job?.id || match.jobId.id === job?.id
       );
       setHasApplied(hasAppliedToThisJob);
@@ -303,7 +303,7 @@ export default function JobDetailsPage() {
                             disabled={isApplying}
                             className="bg-[linear-gradient(90deg,#0e3e33,#0e3e33_30%,#0b2b29_50%,#0b2b29)] w-full  text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {isApplying ? 'Applying...' : "I'm Interested"}
+                            {isApplying ? 'Applying...' : "Apply"}
                           </button>
                         </>
                       )
@@ -327,7 +327,7 @@ export default function JobDetailsPage() {
                         href={`/auth/login?redirect=${encodeURIComponent(window.location.pathname)}`}
                         className="bg-[linear-gradient(90deg,#0e3e33,#0e3e33_30%,#0b2b29_50%,#0b2b29)] w-full inline-block  text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold"
                       >
-                        I'm Interested
+                        Apply
                       </Link>
                     </>
                   )}
