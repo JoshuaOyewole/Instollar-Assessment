@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    Building2,
     MapPin,
     Calendar,
     ArrowRight,
@@ -110,7 +109,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                 <div className="flex items-center !gap-x-3 text-xs text-gray-500">
                     <div className="flex items-center">
                         <Users className="w-3 h-3 !mr-1" />
-                        <span>Posted by {job.createdBy?.name || 'HR Team'}</span>
+                        <span>Posted by {job.createdBy?.name || ' Admin'}</span>
                     </div>
                     {job.isActive !== false && (
                         <div className="items-center hidden md:flex">
@@ -120,7 +119,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                     )}
                 </div>
 
-                <Link href={`/jobs/${job.id}`} className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white !px-4 !py-2 rounded-xl text-sm font-medium hover:from-blue-700 hover:to-purple-700 transition-all duration-200 group-hover:shadow-lg">
+                <Link href={`/jobs/${job.id}`} className="flex items-center space-x-2 bg-[linear-gradient(90deg,#0e3e33,#0e3e33_30%,#0b2b29_50%,#0b2b29)] text-white !px-4 !py-2 rounded-xl text-sm font-medium transition-all duration-200 group-hover:shadow-lg">
                     <span>View Details</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
                 </Link>

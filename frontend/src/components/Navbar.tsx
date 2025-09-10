@@ -11,9 +11,7 @@ import {
   Menu,
   X,
   ChevronDown,
-  Zap,
-  Settings,
-  HelpCircle
+  Zap
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -31,11 +29,11 @@ const Navbar = () => {
             href={user && user?.role === 'admin' ? "/admin/dashboard" : user?.role === 'talent' ? "/jobs" : "/"}
             className="flex items-center group gap-x-2 justify-center relative z-50"
           >
-            <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 bg-[#0b2b29] rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              InstollarMatch
+            <span className="text-2xl font-bold bg-gradient-to-r from-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent">
+              InstolConnect
             </span>
           </Link>
 
@@ -134,19 +132,19 @@ const Navbar = () => {
               <div className="flex items-center gap-x-4">
                 <Link
                   href="/jobs"
-                  className="text-gray-700 hover:text-blue-600 !px-4 !py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
+                  className="text-gray-700 hover:text-[#0b2b29] !px-4 !py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
                 >
                   Browse Jobs
                 </Link>
                 <Link
                   href="/auth/login"
-                  className="text-gray-700 hover:text-blue-600 !px-4 !py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
+                  className="text-gray-700 hover:text-[#0b2b29] !px-4 !py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/auth/register"
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white !px-6 !py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold"
+                  className="bg-[#0e3e33] text-white !px-6 !py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold"
                 >
                   Get Started
                 </Link>
@@ -260,7 +258,7 @@ const Navbar = () => {
               </Link>
               <Link
                 href="/auth/register"
-                className="block bg-gradient-to-r from-blue-600 to-purple-600 text-white !px-4 !py-3 rounded-xl !mx-2 text-center font-semibold"
+                className="block bg-gradient text-white !px-4 !py-3 rounded-xl !mx-2 text-center font-semibold"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Get Started

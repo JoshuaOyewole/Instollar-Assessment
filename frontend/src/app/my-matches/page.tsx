@@ -88,7 +88,7 @@ export default function MyMatchesPage() {
           </div>
         </div>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid gap-6 mb-4">
           {matches.map((match) => (
             <div key={match._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-green-500">
 
@@ -138,12 +138,7 @@ export default function MyMatchesPage() {
                     <span>Matched by {match.matchedBy.name} • {new Date(match.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
-                <div className="space-x-2">
-                  <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-50 transition-colors">
-                    View Details
-                  </button>
-              
-                </div>
+               
               </div>
             </div>
           ))}

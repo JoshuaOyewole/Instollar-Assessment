@@ -117,7 +117,7 @@ function RegisterForm() {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-800"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] dark:text-gray-800"
             placeholder="Enter your full name"
           />
         </div>
@@ -133,7 +133,7 @@ function RegisterForm() {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-800"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] dark:text-gray-800"
             placeholder="Enter your email"
           />
         </div>
@@ -147,7 +147,7 @@ function RegisterForm() {
             name="role"
             value={formData.role}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-800"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] dark:text-gray-800"
           >
             <option value="talent" className=' text-sm'>Job Seeker (e.g Installer)</option>
             <option value="admin" className=' text-sm'>Admin</option>
@@ -166,7 +166,7 @@ function RegisterForm() {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-10 dark:text-gray-800"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] pr-10 dark:text-gray-800"
               placeholder="Enter your password"
             />
             <button
@@ -190,7 +190,7 @@ function RegisterForm() {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-800"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] dark:text-gray-800"
             placeholder="Confirm your password"
           />
         </div>
@@ -198,7 +198,7 @@ function RegisterForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50"
+            className="w-full bg-[#0b2b29] text-white py-2 px-4 rounded-md hover:bg-[#0e3e33] focus:outline-none focus:ring-2 focus:ring-[#0e3e33] disabled:opacity-50"
         >
           {isLoading ? 'Creating account...' : 'Create Account'}
         </button>
@@ -207,7 +207,7 @@ function RegisterForm() {
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
           Already have an account?{' '}
-          <Link href="/auth/login" className="text-blue-600 hover:text-blue-500">
+          <Link href="/auth/login" className="text-[#0e3e33] hover:text-[#0b2b29] font-medium">
             Sign in here
           </Link>
         </p>

@@ -37,10 +37,10 @@ export default function JobDetailsPage() {
   }, [params.id]);
 
   useEffect(() => {
-    if (user && job && user.role === 'talent') {
+    if (user && job && user.role === 'talent' && !hasApplied) {
       checkApplicationStatus();
     }
-  }, [user, job]);
+  }, [user, job, hasApplied]);
 
   const fetchJobDetails = async () => {
     try {
@@ -288,21 +288,21 @@ export default function JobDetailsPage() {
                       hasApplied ? (
                         <>
                           <h3 className="text-xl font-bold text-green-700 mb-2">Application Submitted!</h3>
-                          <p className="text-gray-600 mb-3">Your application has been submitted successfully. We'll notify you of any updates.</p>
+                          <p className="text-gray-600 mb-3">Your will be matched by an admin if you meet the job requirement.</p>
                           <div className="bg-green-100 text-green-800 px-6 py-2 rounded-xl font-semibold">
                             ✓ Applied
                           </div>
                         </>
                       ) : (
                         <>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">Apply for this Position</h3>
+                          <h3 className="text-xl font-bold text-gray-900 mb-2">Express Interest</h3>
                           <p className="text-gray-600 mb-3">Submit your application and get matched with this opportunity.</p>
                           <button
                             onClick={handleApply}
                             disabled={isApplying}
-                            className="bg-gradient-to-r w-full from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="bg-[linear-gradient(90deg,#0e3e33,#0e3e33_30%,#0b2b29_50%,#0b2b29)] w-full  text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            {isApplying ? 'Applying...' : 'Apply Now'}
+                            {isApplying ? 'Applying...' : "I'm Interested"}
                           </button>
                         </>
                       )
@@ -324,7 +324,7 @@ export default function JobDetailsPage() {
                       <p className="text-gray-600 mb-3">Once you create an account, we will match you with the best opportunities.</p>
                       <Link
                         href={`/auth/login?redirect=${encodeURIComponent(window.location.pathname)}`}
-                        className="bg-gradient-to-r w-full inline-block from-blue-600 to-purple-600 text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold"
+                        className="bg-[linear-gradient(90deg,#0e3e33,#0e3e33_30%,#0b2b29_50%,#0b2b29)] w-full inline-block  text-white px-6 py-2 rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-200 font-semibold"
                       >
                         I'm Interested
                       </Link>
