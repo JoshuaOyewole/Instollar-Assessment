@@ -6,6 +6,7 @@ const protectedRoutes = {
   '/admin': ['admin'],
   '/admin/jobs': ['admin'],
   '/admin/matches': ['admin'],
+  '/admin/applications': ['admin'],
   '/admin/dashboard': ['admin'],
   '/my-matches': ['talent', 'admin'],
   '/profile': ['talent', 'admin'],
