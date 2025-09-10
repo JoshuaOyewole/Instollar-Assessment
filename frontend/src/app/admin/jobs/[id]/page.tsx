@@ -18,6 +18,7 @@ import {
   Target
 } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -120,13 +121,13 @@ export default function JobDetailsPage() {
     try {
       await matchesAPI.apply(job.id);
       setHasApplied(true);
-      alert('Application submitted successfully!');
+      toast.success('Application submitted successfully!');
     } catch (error: any) {
       if (error.response?.status === 409) {
-        alert('You have already applied to this job.');
+        toast.info('You have already applied to this job.');
         setHasApplied(true);
       } else {
-        alert('Failed to submit application. Please try again.');
+        toast.error('Failed to submit application. Please try again.');
       }
     } finally {
       setIsApplying(false);

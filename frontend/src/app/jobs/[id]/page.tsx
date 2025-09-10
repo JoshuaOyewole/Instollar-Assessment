@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { jobsAPI, matchesAPI } from '@/lib/api';
+import { jobsAPI, applicationsAPI } from '@/lib/api';
 import { Job } from '@/components/JobCard';
 import { useAuth } from '@/contexts/AuthContext';
 import {
@@ -18,6 +18,7 @@ import {
   Target
 } from 'lucide-react';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -55,12 +56,9 @@ export default function JobDetailsPage() {
 
   const checkApplicationStatus = async () => {
     try {
-      const response = await matchesAPI.getMyMatches();
-      const myMatches = response.data.data || [];
-      const hasAppliedToThisJob = myMatches.some((match: any) => 
-        match.jobId._id === job?.id || match.jobId.id === job?.id
-      );
-      setHasApplied(hasAppliedToThisJob);
+      if (!job?.id) return;
+      const response = await applicationsAPI.checkStatus(job.id);
+      setHasApplied(response.data.data.hasApplied);
     } catch (error) {
       console.error('Error checking application status:', error);
     }
@@ -118,15 +116,15 @@ export default function JobDetailsPage() {
 
     setIsApplying(true);
     try {
-      await matchesAPI.apply(job.id);
+      await applicationsAPI.apply(job.id);
       setHasApplied(true);
-      alert('Application submitted successfully!');
+      toast.success('Interest submitted successfully! Admin will review your application.');
     } catch (error: any) {
       if (error.response?.status === 409) {
-        alert('You have already applied to this job.');
+        toast.info('You have already expressed interest in this job.');
         setHasApplied(true);
       } else {
-        alert('Failed to submit application. Please try again.');
+        toast.error('Failed to submit application. Please try again.');
       }
     } finally {
       setIsApplying(false);

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { jobsAPI, matchesAPI, usersAPI } from '@/lib/api';
+import { jobsAPI, matchesAPI, usersAPI, applicationsAPI } from '@/lib/api';
 import Link from 'next/link';
 import {
   Users,
@@ -24,8 +24,11 @@ interface DashboardStats {
   activeJobs: number;
   totalMatches: number;
   totalTalents: number;
+  totalApplications: number;
+  pendingApplications: number;
   recentMatches: any[];
   recentJobs: any[];
+  recentApplications: any[];
 }
 
 export default function AdminDashboard() {
@@ -35,8 +38,11 @@ export default function AdminDashboard() {
     activeJobs: 0,
     totalMatches: 0,
     totalTalents: 0,
+    totalApplications: 0,
+    pendingApplications: 0,
     recentMatches: [],
-    recentJobs: []
+    recentJobs: [],
+    recentApplications: []
   });
   const [loading, setLoading] = useState(true);
 
@@ -59,14 +65,25 @@ export default function AdminDashboard() {
       //Fetch users count
       const usersResponse = await usersAPI.getAllTalents();
       const usersCount = usersResponse.data.data || []
+
+      // Fetch applications data
+      const applicationsResponse = await applicationsAPI.getAll();
+      const applications = applicationsResponse.data.data || [];
+
+      // Fetch pending applications
+      const pendingApplicationsResponse = await applicationsAPI.getAll({ status: 'pending' });
+      const pendingApplications = pendingApplicationsResponse.data.data || [];
       
       setStats({
         totalJobs: jobs.length,
         activeJobs: jobs.filter((job: any) => job.isActive).length,
         totalMatches: matches.length,
         totalTalents: usersCount.length,
+        totalApplications: applications.length,
+        pendingApplications: pendingApplications.length,
         recentMatches: matches.slice(0, 5),
-        recentJobs: jobs.slice(0, 5)
+        recentJobs: jobs.slice(0, 5),
+        recentApplications: applications.slice(0, 5)
       });
 
     } catch (error) {
@@ -94,7 +111,7 @@ export default function AdminDashboard() {
         <div className="mb-12">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#195d4d]  to-[#0b2b29] bg-clip-text text-transparent">
                 Admin Dashboard
               </h1>
               <div className="flex items-center mt-3">
@@ -114,7 +131,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
           <div className="group relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative flex items-center justify-between">
@@ -182,6 +199,23 @@ export default function AdminDashboard() {
               </div>
             </div>
           </div>
+
+          <div className="group relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 to-cyan-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="relative flex items-center justify-between">
+              <div>
+                <p className="text-sm font-medium text-gray-500 mb-1">Applications</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">{stats.totalApplications}</p>
+                <div className="flex items-center mt-2">
+                  <Clock className="h-4 w-4 text-teal-500 mr-1" />
+                  <span className="text-xs text-teal-600 font-medium">{stats.pendingApplications} pending</span>
+                </div>
+              </div>
+              <div className="p-4 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl shadow-lg">
+                <Activity className="h-7 w-7 text-white" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Quick Actions */}
@@ -225,20 +259,20 @@ export default function AdminDashboard() {
           </Link>
 
           <Link
-            href="/admin/matches"
+            href="/admin/applications"
             className="group relative bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative flex items-center justify-between">
               <div className="flex-1">
                 <div className="flex items-center mb-3">
-                  <div className="p-3 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-lg mr-4">
-                    <UserCheck className="h-6 w-6 text-white" />
+                  <div className="p-3 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-xl shadow-lg mr-4">
+                    <Activity className="h-6 w-6 text-white" />
                   </div>
-                  <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-purple-500 transition-colors duration-300" />
+                  <ArrowUpRight className="h-5 w-5 text-gray-400 group-hover:text-teal-500 transition-colors duration-300" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2"> Match Talent</h3>
-                <p className="text-gray-600">Review and manage talent matches</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Review Applications</h3>
+                <p className="text-gray-600">Review talent applications and create matches</p>
               </div>
             </div>
           </Link>
@@ -265,8 +299,8 @@ export default function AdminDashboard() {
                   {stats.recentMatches.map((match: any, index: number) => (
                     <div key={index} className="group flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
                       <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-4">
-                          <UserCheck className="h-6 w-6 text-blue-600" />
+                        <div className="h-12 w-16 lg:w-12 lg:h-12 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl flex items-center justify-center mr-4">
+                          <UserCheck className=" h-6 w-6 text-blue-600" />
                         </div>
                         <div>
                           <p className="font-semibold text-gray-900">
@@ -320,7 +354,7 @@ export default function AdminDashboard() {
                   {stats.recentJobs.map((job: any, index: number) => (
                     <div key={index} className="group flex items-center justify-between p-4 rounded-xl hover:bg-gray-50 transition-colors duration-200">
                       <div className="flex items-center">
-                        <div className="w-12 h-12 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl flex items-center justify-center mr-4">
+                        <div className=" h-12 w-16 lg:w-12 lg:h-12 bg-gradient-to-r from-green-100 to-blue-100 rounded-xl flex items-center justify-center mr-4">
                           <Briefcase className="h-6 w-6 text-green-600" />
                         </div>
                         <div>

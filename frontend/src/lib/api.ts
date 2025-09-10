@@ -47,4 +47,15 @@ export const matchesAPI = {
   getAll: () => api.get('/matches'),
 };
 
+// Applications API
+export const applicationsAPI = {
+  apply: (jobId: string) => api.post('/applications/apply', { jobId}),
+  getMyApplications: () => api.get('/applications/my-applications'),
+  checkStatus: (jobId: string) => api.get(`/applications/check/${jobId}`),
+  getAll: (params?: any) => api.get('/applications', { params }),
+  getStats: () => api.get('/applications/stats'),
+  review: (applicationId: string, status: string) => 
+    api.patch(`/applications/${applicationId}/review`, { status}),
+};
+
 export default api;

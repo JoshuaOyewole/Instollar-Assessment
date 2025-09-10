@@ -109,7 +109,7 @@ const JobCard: React.FC<JobCardProps> = ({ job }) => {
                 <div className="flex items-center !gap-x-3 text-xs text-gray-500">
                     <div className="flex items-center">
                         <Users className="w-3 h-3 !mr-1" />
-                        <span className='truncate w-4/5'>Posted by {job.createdBy?.name || ' Admin in the morning'}</span>
+                        <span className='truncate w-4/5'>Posted by {job.createdBy?.name || ' Admin'}</span>
                     </div>
                     {job.isActive !== false && (
                         <div className="items-center hidden md:flex">

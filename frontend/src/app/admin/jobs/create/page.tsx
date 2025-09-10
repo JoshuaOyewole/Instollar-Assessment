@@ -16,8 +16,6 @@ interface Job {
 }
 
 function AdminJobsPage() {
-    const [jobs, setJobs] = useState<Job[]>([]);
-    const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     const [formData, setFormData] = useState({
         title: '',
@@ -27,21 +25,6 @@ function AdminJobsPage() {
     });
     const [submitting, setSubmitting] = useState(false);
 
-    useEffect(() => {
-        // Middleware handles authentication, just fetch jobs
-        fetchJobs();
-    }, []);
-
-    const fetchJobs = async () => {
-        try {
-            const response = await jobsAPI.getAll();
-            setJobs(response.data.data);
-        } catch (err: any) {
-            setError('Failed to load jobs');
-        } finally {
-            setLoading(false);
-        }
-    };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         setFormData({
@@ -72,29 +55,16 @@ function AdminJobsPage() {
                 requiredSkills: ''
             });
             setError('');
-            // Refresh job list
-            fetchJobs();
-
-
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to create job');
         } finally {
             setSubmitting(false);
         }
-    };
-
-
-    if (loading) {
-        return (
-            <div className="flex items-center justify-center min-h-[60vh]">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            </div>
-        );
-    }
+    };  
 
     return (
         <div className="max-w-6xl mx-auto">
-            <div className="flex justify-between items-center my-8">
+            <div className="flex justify-between items-center my-8 px-4">
                 <div>
                     <h1 className="text-3xl font-bold text-gray-900 mb-2">Create Jobs</h1>
                     <p className="text-gray-600">Create and manage job postings</p>

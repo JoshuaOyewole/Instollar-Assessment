@@ -63,14 +63,14 @@ function AdminJobsPage() {
   }
 
   return (
-    <div className="max-w-6xl mx-auto">
+    <div className="max-w-6xl mx-auto px-2">
       <div className="flex justify-between items-center my-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Manage Jobs</h1>
+          <h1 className="text-3xl font-bold text-[#0b2b29] mb-2">Manage Jobs</h1>
           <p className="text-gray-600">Create and manage job postings</p>
         </div>
         <Link href={"/admin/jobs/create"}
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors flex items-center gap-2"
+          className="bg-[#0a524d] text-white px-4 py-2 rounded-md hover:bg-[#0b2b29] transition-colors flex items-center gap-2"
         >
           <Plus size={20} />
           Create Job

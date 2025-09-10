@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { matchesAPI } from '@/lib/api';
-import { MapPin, DollarSign, Clock, Building, User } from 'lucide-react';
+import { MapPin, DollarSign, Clock, Building, User, ArrowLeft } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface Match {
@@ -64,7 +64,14 @@ export default function MyMatchesPage() {
   }
 
   return (
-    <div className="max-w-4xl mx-auto mt-6">
+    <div className="max-w-4xl mx-auto mt-6 px-4">
+      <button
+        onClick={() => router.back()}
+        className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 mb-8 transition-colors duration-200 group"
+      >
+        <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
+        <span className="font-medium">Go Back </span>
+      </button>
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">My Job Matches</h1>
         <p className="text-gray-600">
@@ -90,11 +97,11 @@ export default function MyMatchesPage() {
       ) : (
         <div className="grid gap-6 mb-4">
           {matches.map((match) => (
-            <div key={match._id} className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow border-l-4 border-green-500">
+            <div key={match._id} className="bg-white rounded-lg shadow-md lg:py-6 px-3 py-6 lg:px-5 hover:shadow-lg transition-shadow border-l-4 border-green-500">
 
               <div className="flex items-center gap-2 mb-1">
                 <h2 className="text-xl font-semibold text-gray-900">{match.jobId.title}</h2>
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-md text-xs font-medium">
                   Matched
                 </span>
               </div>
@@ -117,7 +124,7 @@ export default function MyMatchesPage() {
                     {match.jobId.requiredSkills.slice(0, 3).map((req, index) => (
                       <span
                         key={index}
-                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm"
+                        className="bg-gray-100 text-gray-700 px-3 py-1 rounded-md text-sm"
                       >
                         {req}
                       </span>
@@ -138,7 +145,7 @@ export default function MyMatchesPage() {
                     <span>Matched by {match.matchedBy.name} • {new Date(match.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
-               
+
               </div>
             </div>
           ))}

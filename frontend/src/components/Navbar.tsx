@@ -48,14 +48,14 @@ const Navbar = () => {
                   <>
                     <Link
                       href="/jobs"
-                      className="text-gray-700 hover:text-blue-600 !px-4 !py-2 rounded-xl hover:bg-blue-50 transition-all duration-200 font-medium"
+                      className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     >
                       Browse Jobs
                     </Link>
 
                     <Link
                       href="/my-matches"
-                      className="flex items-center space-x-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
+                      className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     >
                       <Users size={18} />
                       <span>My Matches</span>
@@ -67,17 +67,17 @@ const Navbar = () => {
                   <>
                     <Link
                       href="/admin/jobs"
-                      className="flex items-center space-x-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
+                      className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     >
                       <Briefcase size={18} />
                       <span>Manage Jobs</span>
                     </Link>
                     <Link
-                      href="/admin/matches"
-                      className="flex items-center space-x-2 text-gray-700 hover:text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
+                      href="/admin/applications"
+                      className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     >
                       <Users size={18} />
-                      <span>Create Matches</span>
+                      <span>Applications</span>
                     </Link>
                   </>
                 )}
@@ -185,7 +185,7 @@ const Navbar = () => {
               {/* Navigation Links */}
               <Link
                 href="/jobs"
-                className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl mx-2 transition-all"
+                className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 <Briefcase size={20} />
@@ -195,7 +195,7 @@ const Navbar = () => {
               {user.role === 'talent' && (
                 <Link
                   href="/my-matches"
-                  className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl mx-2 transition-all"
+                  className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Users size={20} />
@@ -207,19 +207,19 @@ const Navbar = () => {
                 <>
                   <Link
                     href="/admin/jobs"
-                    className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl mx-2 transition-all"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Briefcase size={20} />
                     <span>Manage Jobs</span>
                   </Link>
                   <Link
-                    href="/admin/matches"
-                    className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl mx-2 transition-all"
+                    href="/admin/applications"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <Users size={20} />
-                    <span>Create Matches</span>
+                    <span>Applications</span>
                   </Link>
                 </>
               )}
