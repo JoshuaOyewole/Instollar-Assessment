@@ -149,8 +149,8 @@ function RegisterForm() {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:text-gray-800"
           >
-            <option value="talent" className=' text-sm'>Talent (Job Seeker)</option>
-            <option value="admin" className=' text-sm'>Admin (HR/Recruiter)</option>
+            <option value="talent" className=' text-sm'>Installer (Job Seeker)</option>
+            <option value="admin" className=' text-sm'>Admin</option>
           </select>
         </div>
 
