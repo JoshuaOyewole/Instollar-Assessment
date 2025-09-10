@@ -120,7 +120,7 @@ function AdminJobsPage() {
                   Created on {new Date(job.createdAt).toLocaleDateString()}
                 </div>
                 <Link href={`/admin/jobs/${job.id}`} className="text-blue-600 font-medium border rounded-md px-2 py-1 hover:text-blue-800">
-                  View Details
+                  View 
                 </Link>
               </div>
 

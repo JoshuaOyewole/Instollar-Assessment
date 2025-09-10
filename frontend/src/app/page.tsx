@@ -33,7 +33,7 @@ export default function Home() {
         </div>
 
         <div className="relative mx-auto flex justify-center px-4 sm:px-6 lg:px-8 w-full">
-          <div className="text-center justify-center items-center mb-20 w-[95%] lg:w-4/5 mx-auto flex flex-col gap-y-6 lg:gap-y-10 !mt-32 !lg:mt-0 ">
+          <div className="text-center justify-center items-center mb-20 w-[95%] lg:w-4/5 mx-auto flex flex-col gap-y-6 lg:gap-y-10 !mt-16 !lg:mt-0 ">
             {/* Enhanced Badge */}
             <div className="inline-flex w-max mx-auto items-center !px-6 !py-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-sm font-semibold mb-8 border border-gray-200/50 shadow-lg hover:shadow-xl transition-all duration-300">
               <Zap className="w-4 h-4 mr-2 text-blue-600" />
@@ -42,15 +42,15 @@ export default function Home() {
 
             {/* Enhanced Main Headline */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold text-gray-900 !lg:mb-8 !lg:leading-[0.9] !tracking-tight">
-              <span className='hidden lg:block'>Ready to Find Your</span> <span className='lg:hidden'>Discover jobs </span>
-              <span className="hidden lg:block bg-gradient-to-r from-[#0e3e33] via-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent">
-                Perfect Match?
+              <span className='hidden lg:block'>Discover jobs</span> <span className='lg:hidden'>Discover jobs </span>
+              <span className="hidden lg:block bg-gradient-to-r from-[#0e3e33] via-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent animate-pulse">
+               for you
               </span>
               <span className='lg:hidden block bg-gradient-to-r from-[#0e3e33] via-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent animate-pulse'>for you</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-gray-800 leading-relaxed font-light">
-               Join thousands of   <span className="font-semibold text-gray-800">professionals</span> who have found their dream jobs through our <span className='lg:block'>intelligent matching platform.</span> 
+               Join thousands of   <span className="font-semibold text-gray-800">professionals</span> who have found their dream jobs through our <span className='lg:block'>perfect job matching platform.</span> 
             </p>
 
             {/* Enhanced CTA Buttons */}

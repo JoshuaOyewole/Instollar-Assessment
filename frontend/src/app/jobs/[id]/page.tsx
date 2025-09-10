@@ -193,10 +193,10 @@ export default function JobDetailsPage() {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Job Header Card */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl py-4 px-8 shadow-xl border border-gray-200/50">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl py-4 px-6 lg:px-7 shadow-xl border border-gray-200/50">
                 <div className="flex items-start justify-between flex-col">
                   <div className="flex lg:justify-between lg:w-full">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                    <h1 className="text-xl lg:text-3xl font-bold text-gray-900 mb-3">
                       {job.title}
                     </h1>
                     <div className="flex space-x-3 h-5 lg:h-auto lg:justify-between  ">
@@ -232,20 +232,12 @@ export default function JobDetailsPage() {
                   </div>
                 </div>
 
-                {/* Job Stats */}
-
-
-
-
-
-
-
 
               </div>
 
               {/* Job Description */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-200/50">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+              <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 lg:p-7 shadow-xl border border-gray-200/50">
+                <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6 flex items-center">
                   <Target className="w-6 h-6 mr-3 text-blue-600" />
                   Job Description
                 </h2>
@@ -258,8 +250,8 @@ export default function JobDetailsPage() {
 
               {/* Requirements */}
               {job.requiredSkills && job.requiredSkills.length > 0 && (
-                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-8 shadow-xl border border-gray-200/50">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+                <div className="bg-white/80 backdrop-blur-sm rounded-xl p-6 lg:p-7 shadow-xl border border-gray-200/50">
+                  <h2 className="text-xl lg:text-2xl font-bold text-gray-900 mb-6 flex items-center">
                     <CheckCircle className="w-6 h-6 mr-3 text-green-600" />
                     Requirements
                   </h2>
@@ -267,9 +259,9 @@ export default function JobDetailsPage() {
                     {job.requiredSkills.map((skill, index) => (
                       <div
                         key={index}
-                        className="flex items-center space-x-3 p-4 bg-blue-50 rounded-xl border border-blue-200"
+                        className="flex items-center space-x-3 p-3 lg:p-4 bg-blue-50 rounded-xl border border-blue-200"
                       >
-                        <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0" />
+                        <CheckCircle className="lg:w-5  lg:h-5 text-blue-600 flex-shrink-0" />
                         <span className="text-blue-800 font-medium">{skill}</span>
                       </div>
                     ))}

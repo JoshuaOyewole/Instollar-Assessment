@@ -32,7 +32,7 @@ const Navbar = () => {
             <div className="w-8 h-8 bg-[#0b2b29] rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
               <Zap className="w-5 h-5 text-white" />
             </div>
-            <span className="text-2xl font-bold bg-gradient-to-r from-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent">
+            <span className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent">
               InstollConnect
             </span>
           </Link>

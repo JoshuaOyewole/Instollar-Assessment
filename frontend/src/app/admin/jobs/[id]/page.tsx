@@ -196,7 +196,7 @@ export default function JobDetailsPage() {
               <div className="bg-white/80 backdrop-blur-sm rounded-xl py-4 px-8 shadow-xl border border-gray-200/50">
                 <div className="flex items-start justify-between flex-col">
                   <div className="flex lg:justify-between lg:w-full">
-                    <h1 className="text-3xl font-bold text-gray-900 mb-3">
+                    <h1 className="text-xl lg:text-3xl font-bold text-gray-900 mb-3">
                       {job.title}
                     </h1>
                     <div className="flex space-x-3 h-5 lg:h-auto lg:justify-between  ">
