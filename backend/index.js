@@ -12,6 +12,7 @@ const authRoutes = require('./routes/auth');
 const jobRoutes = require('./routes/jobs');
 const matchRoutes = require('./routes/matches');
 const userRoutes = require('./routes/users');
+const applicationRoutes = require('./routes/applications');
 const app = express();
 
 // Middleware
@@ -26,6 +27,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/matches', matchRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/applications', applicationRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
