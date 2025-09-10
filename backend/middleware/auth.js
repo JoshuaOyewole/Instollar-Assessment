@@ -26,7 +26,7 @@ exports.protect = async (req, res, next) => {
     // Verify token
     const payload = jwt.verify(token, process.env.JWT_SECRET);
 
-    if (!payload || !payload.id || !payload.role) {
+    if (!payload || !payload.id) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         status: false,
         message: "Invalid Token: Missing required fields in token payload",

@@ -33,38 +33,3 @@ exports.createJob = async (body) => {
 
   return validate(schema, body);
 };
-
-/**
- * Validate job update data
- * @param {Object} body - Request body
- * @returns {Object} - Validation result
- */
-exports.updateJob = async (body) => {
-  const schema = Joi.object({
-    title: Joi.string().min(2).max(100).optional().trim().messages({
-      "string.min": "Job title must be at least 2 characters long",
-      "string.max": "Job title cannot exceed 100 characters",
-    }),
-    description: Joi.string().min(10).max(3000).optional().trim().messages({
-      "string.min": "Job description must be at least 10 characters long",
-      "string.max": "Job description cannot exceed 3000 characters",
-    }),
-    location: Joi.string().min(2).max(100).optional().trim().messages({
-      "string.min": "Location must be at least 2 characters long",
-      "string.max": "Location cannot exceed 100 characters",
-    }),
-    requiredSkills: Joi.array()
-      .items(Joi.string().max(200).trim())
-      .optional()
-      .messages({
-        "string.max": "Each required skill cannot exceed 200 characters",
-      }),
-    isActive: Joi.boolean().optional(),
-  })
-    .min(1)
-    .messages({
-      "object.min": "At least one field must be provided for update",
-    });
-
-  return validate(schema, body);
-};

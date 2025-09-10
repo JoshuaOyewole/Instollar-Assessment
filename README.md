@@ -1,73 +1,147 @@
-# Job Matching Platform
+# Instollar - Job Matching Platform
 
-A full-stack job-matching platform built with Next.js, Node.js/Express, and MongoDB. This application connects talented professionals with job opportunities through role-based authentication and manual job-user matching.
+A comprehensive full-stack job-matching platform built with Next.js 15, Node.js/Express, and MongoDB Atlas. This application connects talented professionals with job opportunities through advanced role-based authentication, middleware protection, and intelligent job-user matching with a modern glassmorphism UI design.
 
 ## 🚀 Features
 
-### User Management
-- **Registration & Login**: JWT-based authentication system
-- **Role-based Access**: 
-  - **Talent**: Job seekers who can view matched jobs
-  - **Admin**: HR/Recruiters who can manage jobs and create matches
-- **Security**: Password hashing with bcrypt and JWT middleware protection
+### Authentication & Authorization
+- **JWT-based Authentication**: Secure token-based authentication with HTTP-only cookies
+- **Middleware Protection**: Server-side route protection using Next.js middleware
+- **Role-based Access Control**: 
+  - **Talent**: Job seekers who can apply to jobs and view matches
+  - **Admin**: HR/Recruiters with full dashboard and management capabilities
+- **Automatic Redirects**: Role-based login redirects and protected route access
+- **Security**: bcrypt password hashing, JWT tokens, and comprehensive input validation
 
 ### Job Management
-- **Public Access**:
-  - View all available jobs
-  - Get detailed job information
-- **Admin-only Features**:
-  - Create new job postings
-  - Delete existing jobs
-  - Manage job listings
+- **Public Job Browsing**: View all active job listings with detailed information
+- **Advanced Job Details**: Comprehensive job pages with company info, requirements, and application status
+- **Admin Job Management**:
+  - Create, edit, and delete job postings
+  - Advanced job validation and management
+  - Job status tracking and analytics
+- **Responsive Job Cards**: Modern card-based design with salary formatting and experience indicators
 
-### Matching System
-- **Admin Functionality**: 
-  - Match talents to specific jobs
-  - Create job-user relationships
-- **Talent Features**:
-  - View all jobs matched to their profile
-  - Browse matched opportunities
+### Advanced Matching System
+- **Smart Job Matching**: Admin-controlled matching between talents and suitable positions
+- **Application Management**: 
+  - Talents can apply to matched jobs
+  - Application status tracking
+  - Duplicate application prevention
+- **Match Analytics**: Dashboard insights and match success tracking
+- **Notification System**: Real-time updates on new matches and applications
+
+### Modern Admin Dashboard
+- **Glassmorphism Design**: Beautiful, modern UI with gradient effects and glass morphism
+- **Comprehensive Analytics**: Job statistics, user metrics, and platform insights
+- **Quick Actions**: Fast access to common administrative tasks
+- **Recent Activity**: Monitor latest applications, matches, and user activity
+- **User Management**: View and manage talent profiles and admin users
 
 ## 🛠 Tech Stack
 
 ### Frontend
-- **Next.js 15** with TypeScript
-- **Tailwind CSS** for styling
-- **React Hook Form** for form management
-- **Axios** for API calls
-- **Lucide React** for icons
+- **Next.js 15.5.2** with App Router and TypeScript
+- **React 19.1.0** with modern hooks and context
+- **Tailwind CSS v4** with custom glassmorphism design
+- **React Hook Form 7.62.0** with Zod validation
+- **Axios 1.11.0** for API communications
+- **Lucide React** for modern iconography
+- **React Toastify** for user notifications
+- **Next.js Middleware** for server-side route protection
 
 ### Backend
-- **Node.js** with **Express.js**
-- **MongoDB** with **Mongoose**
-- **JWT** for authentication
-- **bcrypt** for password hashing
-- **CORS** for cross-origin requests
+- **Node.js** with **Express.js 5.1.0**
+- **MongoDB Atlas** with **Mongoose 8.18.0**
+- **JWT 9.0.2** for secure authentication
+- **bcryptjs 3.0.2** for password hashing
+- **Joi 18.0.1** and **Zod 4.1.5** for validation
+- **Helmet 8.1.0** for security headers
+- **CORS 2.8.5** for cross-origin requests
+- **Jest 29.7.0** for comprehensive testing
 
-## 📁 Project Structure
+### Architecture
+- **Repository Pattern**: Clean separation of data access
+- **Service Layer**: Business logic abstraction  
+- **Controller Pattern**: Request/response handling
+- **Middleware Architecture**: Authentication and validation layers
+- **Environment Configuration**: Secure environment variable management
+
+## 📁 Project Architecture
 
 ```
-├── frontend/                   # Next.js frontend application
+instollar/
+├── frontend/                           # Next.js 15 Frontend Application
 │   ├── src/
-│   │   ├── app/               # App router pages
-│   │   │   ├── auth/          # Authentication pages
-│   │   │   ├── admin/         # Admin-only pages
-│   │   │   ├── jobs/          # Job listing pages
-│   │   │   └── my-matches/    # Talent's matched jobs
-│   │   ├── components/        # Reusable components
-│   │   ├── contexts/          # React contexts
-│   │   └── lib/              # Utilities and API clients
-│   ├── package.json
-│   └── ...
-├── backend/                   # Node.js/Express backend
-│   ├── controllers/          # Route controllers
-│   ├── middleware/           # Authentication middleware
-│   ├── models/              # MongoDB models
-│   ├── routes/              # API routes
-│   ├── server.js            # Main server file
-│   ├── package.json
-│   └── .env                 # Environment variables
-└── README.md
+│   │   ├── app/                       # App Router Pages
+│   │   │   ├── auth/                  # Authentication (Login/Register)
+│   │   │   │   ├── login/page.tsx     # Login with role-based redirects
+│   │   │   │   └── register/page.tsx  # Registration with Suspense
+│   │   │   ├── admin/                 # Admin-Only Protected Routes
+│   │   │   │   ├── dashboard/page.tsx # Modern glassmorphism dashboard
+│   │   │   │   ├── jobs/              # Job management interface
+│   │   │   │   └── matches/page.tsx   # Match management system
+│   │   │   ├── jobs/                  # Public Job Browsing
+│   │   │   │   ├── page.tsx           # Job listings with search
+│   │   │   │   └── [id]/page.tsx      # Detailed job view & applications
+│   │   │   ├── my-matches/page.tsx    # Talent's matched jobs
+│   │   │   ├── layout.tsx             # Root layout with auth context
+│   │   │   └── page.tsx               # Landing page
+│   │   ├── components/                # Reusable UI Components
+│   │   │   ├── JobCard.tsx            # Modern job card with formatting
+│   │   │   ├── Navbar.tsx             # Role-based navigation
+│   │   │   └── ProtectedRoute.tsx     # Client-side route protection
+│   │   ├── contexts/
+│   │   │   └── AuthContext.tsx        # Global auth state with cookies
+│   │   ├── lib/                       # Utilities & Configuration
+│   │   │   ├── api.ts                 # Axios API client
+│   │   │   ├── auth.ts                # Auth utilities
+│   │   │   └── cookies.ts             # Cookie management
+│   │   └── middleware.ts              # Server-side route protection
+│   ├── tailwind.config.ts             # Tailwind CSS v4 configuration
+│   ├── next.config.ts                 # Next.js configuration
+│   └── package.json                   # Dependencies & scripts
+├── backend/                           # Node.js/Express Backend API
+│   ├── controllers/                   # Request/Response Logic
+│   │   ├── auth.js                    # Authentication controller
+│   │   ├── jobs.js                    # Job management controller
+│   │   ├── matches.js                 # Match system controller
+│   │   ├── talents.js                 # Talent-specific operations
+│   │   └── users.js                   # User management controller
+│   ├── middleware/
+│   │   └── auth.js                    # JWT verification middleware
+│   ├── models/                        # MongoDB Schemas
+│   │   ├── User.js                    # User model with roles
+│   │   ├── Job.js                     # Job postings model
+│   │   └── Match.js                   # Job-user matching model
+│   ├── repositories/                  # Data Access Layer
+│   │   ├── UserRepository.js          # User data operations
+│   │   ├── JobRepository.js           # Job data operations
+│   │   └── MatchRepository.js         # Match data operations
+│   ├── services/                      # Business Logic Layer
+│   │   ├── UserService.js             # User business logic
+│   │   ├── JobService.js              # Job business logic
+│   │   └── MatchService.js            # Match business logic
+│   ├── routes/                        # API Route Definitions
+│   │   ├── auth.js                    # Authentication routes
+│   │   ├── jobs.js                    # Job CRUD routes
+│   │   ├── matches.js                 # Match management routes
+│   │   └── users.js                   # User management routes
+│   ├── validators/                    # Input Validation
+│   │   ├── AuthValidator.js           # Auth input validation
+│   │   ├── JobValidator.js            # Job input validation
+│   │   └── MatchValidator.js          # Match input validation
+│   ├── tests/                         # Comprehensive Test Suite
+│   │   ├── setup.js                   # Test environment setup
+│   │   └── *.test.js                  # Unit & integration tests
+│   ├── database/
+│   │   └── db.js                      # MongoDB Atlas connection
+│   ├── utils/
+│   │   └── helpers.js                 # Utility functions
+│   ├── index.js                       # Express server entry point
+│   ├── package.json                   # Dependencies & scripts
+│   └── .env                           # Environment configuration
+└── README.md                          # Project documentation
 ```
 
 ## 🚀 Getting Started
@@ -91,10 +165,10 @@ A full-stack job-matching platform built with Next.js, Node.js/Express, and Mong
 
 3. Configure environment variables:
    ```bash
-   # Copy and edit the .env file
+   # Create/edit the .env file
    NODE_ENV=development
    PORT=5000
-   MONGODB_URI=mongodb://localhost:27017/job-matching
+   MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/instollar
    JWT_SECRET=your-super-secret-jwt-key-here
    JWT_EXPIRE=7d
    ```
@@ -120,6 +194,7 @@ A full-stack job-matching platform built with Next.js, Node.js/Express, and Mong
    ```bash
    # Create .env.local file
    NEXT_PUBLIC_API_URL=http://localhost:5000/api
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
    ```
 
 4. Start the development server:
@@ -133,101 +208,370 @@ A full-stack job-matching platform built with Next.js, Node.js/Express, and Mong
    npm start
    ```
 
-## 📱 Usage
+## 📱 Usage Guide
 
 ### For Talents (Job Seekers)
 
-1. **Register** with role "Talent"
-2. **Browse Jobs** in the jobs section
-3. **View Matches** in "My Matches" to see jobs assigned by admins
-4. **Apply** to matched opportunities
+1. **Registration & Login**
+   - Register with role "Talent" 
+   - Automatic redirect to `/jobs` after login
+   - Secure authentication with HTTP-only cookies
+
+2. **Job Discovery**
+   - Browse all active job listings
+   - View detailed job information with company details
+   - See salary ranges, experience requirements, and job descriptions
+   - Apply to jobs you're interested in (prevents duplicate applications)
+
+3. **Match Management**
+   - View jobs matched to your profile in "My Matches"
+   - Apply to matched opportunities with one click
+   - Track application status and history
 
 ### For Admins (HR/Recruiters)
 
-1. **Register** with role "Admin"
-2. **Create Jobs** in the admin panel
-3. **Manage Jobs** - edit or delete existing postings
-4. **Create Matches** between talents and suitable jobs
-5. **Monitor** the matching system
+1. **Admin Access**
+   - Register with role "Admin"
+   - Access comprehensive admin dashboard with analytics
+   - Automatic redirect to `/admin/dashboard` after login
+
+2. **Job Management**
+   - Create new job postings with detailed requirements
+   - Edit existing job listings and requirements
+   - Delete outdated or filled positions
+   - Monitor job performance and application statistics
+
+3. **Talent Matching**
+   - Browse talent profiles and qualifications
+   - Create strategic matches between talents and suitable jobs
+   - Monitor match success rates and application outcomes
+   - Manage the entire hiring pipeline
+
+4. **Dashboard Analytics**
+   - View platform statistics and insights
+   - Monitor user activity and engagement
+   - Track job posting performance
+   - Access quick action shortcuts for common tasks
 
 ## 🔐 API Endpoints
 
-### Authentication
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/login` - User login
-- `GET /api/auth/me` - Get current user (protected)
+### Authentication Routes
+- `POST /api/auth/register` - User registration with role validation
+- `POST /api/auth/login` - User login with role-based response
+- `GET /api/auth/me` - Get current authenticated user (protected)
+- `POST /api/auth/logout` - Secure logout with token invalidation
 
-### Jobs
-- `GET /api/jobs` - Get all jobs (public)
-- `GET /api/jobs/:id` - Get job by ID (public)
-- `POST /api/jobs` - Create job (admin only)
-- `DELETE /api/jobs/:id` - Delete job (admin only)
+### Job Management Routes
+- `GET /api/jobs` - Get all active jobs (public access)
+- `GET /api/jobs/:id` - Get detailed job information (public)
+- `POST /api/jobs` - Create new job posting (admin only)
+- `PUT /api/jobs/:id` - Update existing job (admin only)
+- `DELETE /api/jobs/:id` - Delete job posting (admin only)
 
-### Matches
-- `POST /api/matches` - Create match (admin only)
-- `GET /api/matches/my-matches` - Get talent's matches (talent only)
+### User Management Routes
+- `GET /api/users` - Get users with role filtering (admin only)
+- `GET /api/users/:id` - Get specific user details (protected)
+- `PUT /api/users/:id` - Update user profile (protected)
+- `GET /api/users?role=talent` - Filter users by role
 
-## 🔧 Development
+### Match Management Routes
+- `POST /api/matches` - Create job-talent match (admin only)
+- `GET /api/matches/my-matches` - Get talent's matched jobs (talent only)
+- `GET /api/matches/:id` - Get specific match details (protected)
+- `PUT /api/matches/:id/apply` - Apply to matched job (talent only)
+- `GET /api/matches/check/:jobId` - Check application status (talent only)
 
-### Running in Development Mode
+### Admin Dashboard Routes
+- `GET /api/admin/stats` - Get platform statistics (admin only)
+- `GET /api/admin/recent-activity` - Get recent platform activity (admin only)
+- `GET /api/admin/users` - Get all users with management options (admin only)
 
-1. Start MongoDB (if running locally)
-2. Start the backend server: `cd backend && npm run dev`
-3. Start the frontend server: `cd frontend && npm run dev`
-4. Access the application at `http://localhost:3000`
+## 🔧 Development Guide
+
+### Development Setup
+
+1. **Prerequisites Check:**
+   ```bash
+   node --version  # Should be v18 or higher
+   npm --version   # Should be v8 or higher
+   ```
+
+2. **Start Development Servers:**
+   ```bash
+   # Terminal 1 - Backend
+   cd backend
+   npm run dev     # Starts with nodemon on port 5000
+   
+   # Terminal 2 - Frontend  
+   cd frontend
+   npm run dev     # Starts with Turbopack on port 3000
+   ```
+
+3. **Access the Application:**
+   - Frontend: `http://localhost:3000`
+   - Backend API: `http://localhost:5000/api`
+   - API Documentation: Available in TESTING.md
+
+### Testing
+
+**Run Backend Tests:**
+```bash
+cd backend
+npm test                    # Run all tests
+npm run test:watch          # Run tests in watch mode
+npm run test:coverage       # Generate coverage report
+```
+
+**Test Coverage Includes:**
+- Authentication controller tests
+- Job service and repository tests
+- Match service tests  
+- User management tests
+- Middleware authentication tests
+
+### Development Tools
+
+**Useful npm Scripts:**
+```bash
+# Backend
+npm run dev         # Development with nodemon
+npm run test        # Jest testing suite
+npm start          # Production server
+
+# Frontend
+npm run dev        # Next.js dev with Turbopack
+npm run build      # Production build
+npm run lint       # ESLint checking
+```
+
+**Environment Setup:**
+- Backend uses nodemon for auto-reload
+- Frontend uses Turbopack for fast refresh
+- MongoDB Atlas connection with debug logging (can be toggled)
+- JWT tokens with configurable expiration
 
 ### Database Models
 
-#### User Model
-- email, password, name, role (talent/admin)
-- Password hashing and JWT token generation
+#### User Model (`models/User.js`)
+```javascript
+{
+  email: String (unique, validated),
+  password: String (hashed with bcrypt),
+  name: String (required),
+  role: String (enum: ["talent", "admin"]),
+  profile: {
+    skills: [String],
+    experience: String,
+    location: String
+  },
+  createdAt: Date,
+  updatedAt: Date
+}
+```
 
-#### Job Model
-- title, description, company, location, salary
-- jobType, experienceLevel, requirements
-- Created by admin reference
+#### Job Model (`models/Job.js`)
+```javascript
+{
+  title: String (required),
+  description: String (required),
+  company: String (required),
+  location: String (required),
+  salary: {
+    min: Number,
+    max: Number,
+    currency: String
+  },
+  jobType: String (enum: ["full-time", "part-time", "contract"]),
+  experienceLevel: String (enum: ["entry", "mid", "senior"]),
+  requirements: [String],
+  benefits: [String],
+  isActive: Boolean (default: true),
+  createdBy: ObjectId (ref: User - admin),
+  createdAt: Date,
+  updatedAt: Date
+}
+```
 
-#### Match Model
-- jobId (reference to Job)
-- userId (reference to User - talent)
-- matchedBy (reference to User - admin)
-- status and timestamps
+#### Match Model (`models/Match.js`)
+```javascript
+{
+  jobId: ObjectId (ref: Job),
+  userId: ObjectId (ref: User - talent),
+  matchedBy: ObjectId (ref: User - admin),
+  status: String (enum: ["pending", "applied", "rejected"]),
+  appliedAt: Date,
+  notes: String,
+  createdAt: Date,
+  updatedAt: Date
+}
+```
 
-## 🛡 Security Features
+## 🛡 Advanced Security Features
 
-- **JWT Authentication**: Secure token-based authentication
-- **Password Hashing**: bcrypt for secure password storage
-- **Role-based Access Control**: Protected routes based on user roles
-- **Input Validation**: Server-side validation for all inputs
-- **CORS Protection**: Configured for frontend-backend communication
+- **JWT Authentication**: Secure token-based authentication with HTTP-only cookies
+- **Middleware Protection**: Server-side route protection using Next.js middleware  
+- **Password Security**: bcrypt hashing with salt rounds for secure password storage
+- **Role-based Access Control**: Granular permissions based on user roles (talent/admin)
+- **Input Validation**: Comprehensive server-side validation using Joi and Zod schemas
+- **CORS Protection**: Configured cross-origin requests with specific allowed origins
+- **Security Headers**: Helmet.js for setting secure HTTP headers
+- **Environment Variables**: Secure configuration management with dotenv
+- **Token Expiration**: Configurable JWT expiration with automatic refresh
+- **Protected Routes**: Both client-side and server-side route protection
+- **SQL Injection Prevention**: Mongoose ODM with parameterized queries
+- **XSS Protection**: Input sanitization and output encoding
 
-## 🎨 UI/UX Features
+## 🎨 Modern UI/UX Features
 
-- **Responsive Design**: Works on desktop and mobile devices
-- **Clean Interface**: Modern design with Tailwind CSS
-- **Loading States**: User feedback during API calls
-- **Error Handling**: User-friendly error messages
-- **Role-based Navigation**: Different UI based on user role
+- **Glassmorphism Design**: Beautiful glass-effect UI with gradient backgrounds
+- **Responsive Design**: Fully optimized for desktop, tablet, and mobile devices
+- **Tailwind CSS v4**: Latest utility-first CSS framework with custom configurations
+- **Interactive Components**: Smooth animations and hover effects throughout
+- **Loading States**: Elegant loading indicators and skeleton screens
+- **Toast Notifications**: Real-time user feedback with react-toastify
+- **Role-based Navigation**: Dynamic navigation menus based on user permissions
+- **Error Handling**: Comprehensive error states with helpful user messages
+- **Form Validation**: Real-time client-side validation with visual feedback
+- **Modern Icons**: Lucide React icon library for consistent iconography
+- **Card-based Layout**: Clean, organized content presentation
+- **Color-coded Elements**: Visual indicators for different job types and statuses
+- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
+- **Dark Mode Ready**: Prepared for dark mode implementation
 
 ## 🚀 Production Deployment
 
-### Frontend (Vercel/Netlify)
-1. Build the project: `npm run build`
-2. Deploy the `out` folder to your hosting provider
-3. Set environment variables for production API URL
+### Frontend Deployment (Vercel Recommended)
 
-### Backend (Railway/Heroku/VPS)
-1. Set up production MongoDB database
-2. Configure environment variables
-3. Deploy with `npm start`
+**Vercel Deployment:**
+1. Connect your GitHub repository to Vercel
+2. Set environment variables in Vercel dashboard:
+   ```bash
+   NEXT_PUBLIC_API_URL=https://your-backend-domain.com/api
+   NEXT_PUBLIC_APP_URL=https://your-frontend-domain.vercel.app
+   ```
+3. Deploy automatically on push to main branch
+
+**Manual Build:**
+```bash
+cd frontend
+npm run build
+npm start
+```
+
+### Backend Deployment (Railway/Render/Heroku)
+
+**Railway Deployment:**
+1. Connect your GitHub repository to Railway
+2. Set environment variables:
+   ```bash
+   NODE_ENV=production
+   PORT=5000
+   MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/instollar
+   JWT_SECRET=your-production-jwt-secret
+   JWT_EXPIRE=7d
+   ```
+3. Deploy with automatic builds
+
+**Docker Deployment:**
+```dockerfile
+# Backend Dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --only=production
+COPY . .
+EXPOSE 5000
+CMD ["npm", "start"]
+```
+
+### Database Setup (MongoDB Atlas)
+1. Create MongoDB Atlas cluster
+2. Whitelist deployment server IPs
+3. Create database user with read/write permissions
+4. Update connection string in environment variables
+
+### SSL/HTTPS Configuration
+- Enable HTTPS for both frontend and backend
+- Update CORS settings for production domains
+- Configure secure cookie settings for production
+
+## � Key Features Implemented
+
+### ✅ Authentication System
+- [x] JWT-based authentication with HTTP-only cookies
+- [x] Role-based access control (Talent/Admin)
+- [x] Server-side middleware protection
+- [x] Automatic role-based redirects after login
+- [x] Secure password hashing with bcrypt
+
+### ✅ Job Management System  
+- [x] Public job browsing with detailed views
+- [x] Admin job creation, editing, and deletion
+- [x] Advanced job filtering and search
+- [x] Responsive job cards with modern design
+- [x] Salary formatting and experience indicators
+
+### ✅ Matching & Application System
+- [x] Admin-controlled job-talent matching
+- [x] One-click job applications for talents
+- [x] Application status tracking
+- [x] Duplicate application prevention
+- [x] Match analytics and insights
+
+### ✅ Modern Admin Dashboard
+- [x] Glassmorphism design with gradient effects
+- [x] Comprehensive platform analytics
+- [x] User management capabilities
+- [x] Quick action shortcuts
+- [x] Recent activity monitoring
+
+### ✅ Advanced UI/UX
+- [x] Tailwind CSS v4 with custom styling
+- [x] Fully responsive design
+- [x] Loading states and error handling
+- [x] Toast notifications
+- [x] Modern iconography with Lucide React
+
+### ✅ Testing & Quality Assurance
+- [x] Comprehensive Jest test suite
+- [x] Controller and service testing
+- [x] Repository pattern testing
+- [x] Code coverage reporting
+- [x] Continuous integration ready
 
 ## 📝 Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
+1. **Fork the Repository**
+   ```bash
+   git clone https://github.com/yourusername/instollar.git
+   cd instollar
+   ```
+
+2. **Create Feature Branch**
+   ```bash
+   git checkout -b feature/your-feature-name
+   ```
+
+3. **Development Setup**
+   ```bash
+   # Install dependencies
+   cd backend && npm install
+   cd ../frontend && npm install
+   ```
+
+4. **Make Changes & Test**
+   ```bash
+   # Run tests
+   cd backend && npm test
+   # Test locally
+   npm run dev
+   ```
+
+5. **Submit Pull Request**
+   - Ensure all tests pass
+   - Add tests for new features
+   - Update documentation if needed
+   - Submit PR with detailed description
 
 ## 📄 License
 
@@ -237,6 +581,24 @@ This project is open source and available under the [MIT License](LICENSE).
 
 For support or questions, please open an issue in the repository or contact the development team.
 
+## 🏆 Project Achievements
+
+- **Modern Tech Stack**: Built with the latest Next.js 15, React 19, and Node.js
+- **Enterprise Architecture**: Implements clean architecture with repository and service patterns
+- **Production Ready**: Comprehensive testing, security, and deployment configurations
+- **Outstanding UI/UX**: Modern glassmorphism design with exceptional user experience
+- **Scalable Design**: Modular architecture ready for future enhancements
+- **Security First**: Multiple layers of security with industry best practices
+
+## 📞 Support & Contact
+
+- **GitHub Issues**: For bug reports and feature requests
+- **Documentation**: Comprehensive API documentation in `/backend/TESTING.md`
+- **Developer**: Joshua Oyewole
+- **Project**: Instollar Job Matching Platform
+
 ---
 
-Built with ❤️ using Next.js, Node.js, and MongoDB by Joshua Oyewole
+**🚀 Built with passion using Next.js 15, Node.js, MongoDB Atlas, and modern web technologies**
+
+*Instollar - Connecting talent with opportunity through intelligent job matching* ✨

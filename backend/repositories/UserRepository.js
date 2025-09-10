@@ -33,32 +33,9 @@ class UserRepository {
     return await dbQuery;
   }
 
-  // Update user by ID
-  async updateById(id, updateData) {
-    return await User.findByIdAndUpdate(id, updateData, {
-      new: true,
-      runValidators: true,
-    });
-  }
-
-  // Delete user by ID
-  async deleteById(id) {
-    return await User.findByIdAndDelete(id);
-  }
-
-  // Count users by query
-  async count(query = {}) {
-    return await User.countDocuments(query);
-  }
-
   //Find users with role 'talent'
   async findTalents(options = {}) {
     return await this.find({ role: "talent" }, options);
-  }
-
-  // Find users with role 'admin'
-  async findAdmins(options = {}) {
-    return await this.find({ role: "admin" }, options);
   }
 }
 

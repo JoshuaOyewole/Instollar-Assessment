@@ -28,12 +28,7 @@ describe('JobRepository', () => {
       const jobData = {
         title: 'Software Engineer',
         description: 'Full-stack developer position',
-        company: 'Tech Corp',
-        location: 'Remote',
-        salary: '$80,000 - $120,000',
         requirements: ['JavaScript', 'React', 'Node.js'],
-        jobType: 'Full-time',
-        experienceLevel: 'Mid-level',
         createdBy: global.testUtils.mockUser._id
       };
 
@@ -168,68 +163,7 @@ describe('JobRepository', () => {
     });
   });
 
-  describe('update', () => {
-    test('should successfully update job', async () => {
-      // Arrange
-      const jobId = global.testUtils.mockJob._id;
-      const updateData = { title: 'Senior Software Engineer', salary: '$90,000 - $130,000' };
-      const updatedJob = {
-        ...global.testUtils.mockJob,
-        ...updateData,
-        createdBy: { name: 'John Doe', email: 'john@example.com' }
-      };
 
-      const mockChain = {
-        populate: jest.fn().mockResolvedValue(updatedJob)
-      };
-
-      Job.findByIdAndUpdate.mockReturnValue(mockChain);
-
-      // Act
-      const result = await jobRepository.update(jobId, updateData);
-
-      // Assert
-      expect(Job.findByIdAndUpdate).toHaveBeenCalledWith(jobId, updateData, {
-        new: true,
-        runValidators: true
-      });
-      expect(mockChain.populate).toHaveBeenCalledWith('createdBy', 'name email');
-      expect(result).toEqual(updatedJob);
-    });
-
-    test('should return null when job to update not found', async () => {
-      // Arrange
-      const jobId = 'nonexistent_id';
-      const updateData = { title: 'Updated Title' };
-
-      const mockChain = {
-        populate: jest.fn().mockResolvedValue(null)
-      };
-
-      Job.findByIdAndUpdate.mockReturnValue(mockChain);
-
-      // Act
-      const result = await jobRepository.update(jobId, updateData);
-
-      // Assert
-      expect(result).toBeNull();
-    });
-
-    test('should handle update validation error', async () => {
-      // Arrange
-      const jobId = global.testUtils.mockJob._id;
-      const updateData = { title: '' }; // Invalid data
-
-      const mockChain = {
-        populate: jest.fn().mockRejectedValue(new Error('Validation failed'))
-      };
-
-      Job.findByIdAndUpdate.mockReturnValue(mockChain);
-
-      // Act & Assert
-      await expect(jobRepository.update(jobId, updateData)).rejects.toThrow('Validation failed');
-    });
-  });
 
   describe('delete', () => {
     test('should successfully delete job', async () => {
@@ -328,57 +262,5 @@ describe('JobRepository', () => {
     });
   });
 
-  describe('findByFilter', () => {
-    test('should successfully find jobs by filter criteria', async () => {
-      // Arrange
-      const filterCriteria = { 
-        jobType: 'Full-time',
-        experienceLevel: 'Mid-level',
-        isActive: true
-      };
-
-      const filteredJobs = [global.testUtils.mockJob];
-
-      const mockChain = {
-        populate: jest.fn().mockReturnThis(),
-        sort: jest.fn().mockResolvedValue(filteredJobs)
-      };
-
-      Job.find.mockReturnValue(mockChain);
-
-      // Act
-      const result = await jobRepository.findByFilter(filterCriteria);
-
-      // Assert
-      expect(Job.find).toHaveBeenCalledWith(filterCriteria);
-      expect(mockChain.populate).toHaveBeenCalledWith('createdBy', 'name email');
-      expect(mockChain.sort).toHaveBeenCalledWith('-createdAt');
-      expect(result).toEqual(filteredJobs);
-    });
-
-    test('should handle complex filter criteria', async () => {
-      // Arrange
-      const complexFilter = {
-        $and: [
-          { isActive: true },
-          { salary: { $regex: /\$80,000/, $options: 'i' } },
-          { requirements: { $in: ['JavaScript'] } }
-        ]
-      };
-
-      const mockChain = {
-        populate: jest.fn().mockReturnThis(),
-        sort: jest.fn().mockResolvedValue([global.testUtils.mockJob])
-      };
-
-      Job.find.mockReturnValue(mockChain);
-
-      // Act
-      const result = await jobRepository.findByFilter(complexFilter);
-
-      // Assert
-      expect(Job.find).toHaveBeenCalledWith(complexFilter);
-      expect(result).toHaveLength(1);
-    });
-  });
+ 
 });

@@ -46,7 +46,6 @@ describe('MatchService', () => {
       findByUser: jest.fn(),
       findByJob: jest.fn(),
       findById: jest.fn(),
-      update: jest.fn(),
       delete: jest.fn(),
       findExisting: jest.fn()
     };
@@ -338,55 +337,6 @@ describe('MatchService', () => {
     });
   });
 
-  describe('updateMatchStatus', () => {
-    test('should successfully update match status', async () => {
-      // Arrange
-      const matchId = global.testUtils.mockMatch._id;
-      const newStatus = 'interviewed';
-      const updatedMatch = { ...global.testUtils.mockMatch, status: newStatus };
-
-      mockMatchRepository.findById.mockResolvedValue(global.testUtils.mockMatch);
-      mockMatchRepository.update.mockResolvedValue(updatedMatch);
-
-      // Act
-      const result = await matchService.updateMatchStatus(matchId, newStatus);
-
-      // Assert
-      expect(result.statusCode).toBe(StatusCodes.OK);
-      expect(result.data.match.status).toBe(newStatus);
-      expect(mockMatchRepository.update).toHaveBeenCalledWith(matchId, { status: newStatus });
-    });
-
-    test('should return error when match not found', async () => {
-      // Arrange
-      const matchId = 'nonexistent_match_id';
-      const newStatus = 'interviewed';
-
-      mockMatchRepository.findById.mockResolvedValue(null);
-
-      // Act
-      const result = await matchService.updateMatchStatus(matchId, newStatus);
-
-      // Assert
-      expect(result.statusCode).toBe(StatusCodes.NOT_FOUND);
-      expect(result.error.message).toBe('Match not found');
-    });
-
-    test('should return error for invalid status', async () => {
-      // Arrange
-      const matchId = global.testUtils.mockMatch._id;
-      const invalidStatus = 'invalid_status';
-
-      mockMatchRepository.findById.mockResolvedValue(global.testUtils.mockMatch);
-
-      // Act
-      const result = await matchService.updateMatchStatus(matchId, invalidStatus);
-
-      // Assert
-      expect(result.statusCode).toBe(StatusCodes.BAD_REQUEST);
-      expect(result.error.message).toBe('Invalid status. Allowed values: applied, reviewed, interviewed, hired, rejected');
-    });
-  });
 
   describe('deleteMatch', () => {
     test('should successfully delete match', async () => {

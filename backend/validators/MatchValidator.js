@@ -72,26 +72,9 @@ exports.createMatch = async (body) => {
     return validate(schema, body);
 };
 
-/**
- * Validate match status update
- * @param {Object} body - Request body
- * @returns {Object} - Validation result
- */
-exports.updateMatchStatus = async (body) => {
-    const schema = Joi.object({
-        status: Joi.string().valid('matched', 'viewed', 'applied').required()
-            .messages({
-                'any.only': 'Status must be one of: matched, viewed, applied',
-                'any.required': 'Status is required'
-            })
-    });
-
-    return validate(schema, body);
-};
 
 module.exports = {
   matchValidator,
   matchStatusValidator,
   createMatch: exports.createMatch,
-  updateMatchStatus: exports.updateMatchStatus
 };

@@ -37,7 +37,6 @@ describe('JobService', () => {
       findAllActive: jest.fn(),
       create: jest.fn(),
       findById: jest.fn(),
-      update: jest.fn(),
       delete: jest.fn(),
       findByUserId: jest.fn()
     };
@@ -55,7 +54,6 @@ describe('JobService', () => {
           ...global.testUtils.mockJob,
           _id: '507f1f77bcf86cd799439015',
           title: 'Frontend Developer',
-          company: 'UI Corp'
         }
       ];
 
@@ -105,12 +103,8 @@ describe('JobService', () => {
       const jobData = {
         title: 'Backend Developer',
         description: 'Node.js developer needed',
-        company: 'Backend Corp',
         location: 'New York',
-        salary: '$70,000 - $90,000',
-        requirements: ['Node.js', 'MongoDB', 'Express'],
-        jobType: 'Full-time',
-        experienceLevel: 'Senior'
+        requiredSkills: ['Node.js', 'MongoDB', 'Express'],
       };
 
       const userId = global.testUtils.mockUser._id;
@@ -222,41 +216,6 @@ describe('JobService', () => {
     });
   });
 
-  describe('updateJob', () => {
-    test('should successfully update job', async () => {
-      // Arrange
-      const jobId = global.testUtils.mockJob._id;
-      const updateData = { title: 'Senior Software Engineer', salary: '$90,000 - $130,000' };
-      const updatedJob = { ...global.testUtils.mockJob, ...updateData };
-
-      mockJobRepository.findById.mockResolvedValue(global.testUtils.mockJob);
-      mockJobRepository.update.mockResolvedValue(updatedJob);
-
-      // Act
-      const result = await jobService.updateJob(jobId, updateData);
-
-      // Assert
-      expect(result.statusCode).toBe(StatusCodes.OK);
-      expect(result.data.job.title).toBe(updateData.title);
-      expect(result.data.job.salary).toBe(updateData.salary);
-      expect(mockJobRepository.update).toHaveBeenCalledWith(jobId, updateData);
-    });
-
-    test('should return error when job to update not found', async () => {
-      // Arrange
-      const jobId = 'nonexistent_job_id';
-      const updateData = { title: 'Updated Title' };
-
-      mockJobRepository.findById.mockResolvedValue(null);
-
-      // Act
-      const result = await jobService.updateJob(jobId, updateData);
-
-      // Assert
-      expect(result.statusCode).toBe(StatusCodes.NOT_FOUND);
-      expect(result.error.message).toBe('Job not found');
-    });
-  });
 
   describe('deleteJob', () => {
     test('should successfully delete job', async () => {

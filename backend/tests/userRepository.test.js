@@ -214,44 +214,6 @@ describe('UserRepository', () => {
     });
   });
 
-  describe('update', () => {
-    test('should successfully update user', async () => {
-      // Arrange
-      const userId = global.testUtils.mockUser._id;
-      const updateData = { name: 'Updated Name', email: 'updated@example.com' };
-      const updatedUser = { ...global.testUtils.mockUser, ...updateData };
-
-      User.findByIdAndUpdate.mockResolvedValue(updatedUser);
-
-      // Act
-      const result = await userRepository.update(userId, updateData);
-
-      // Assert
-      expect(User.findByIdAndUpdate).toHaveBeenCalledWith(userId, updateData, {
-        new: true,
-        runValidators: true
-      });
-      expect(result).toEqual(updatedUser);
-    });
-
-    test('should return null when user to update not found', async () => {
-      // Arrange
-      const userId = 'nonexistent_id';
-      const updateData = { name: 'Updated Name' };
-
-      User.findByIdAndUpdate.mockResolvedValue(null);
-
-      // Act
-      const result = await userRepository.update(userId, updateData);
-
-      // Assert
-      expect(User.findByIdAndUpdate).toHaveBeenCalledWith(userId, updateData, {
-        new: true,
-        runValidators: true
-      });
-      expect(result).toBeNull();
-    });
-  });
 
   describe('delete', () => {
     test('should successfully delete user', async () => {

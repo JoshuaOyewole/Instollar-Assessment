@@ -27,12 +27,8 @@ global.testUtils = {
     _id: '507f1f77bcf86cd799439012',
     title: 'Software Engineer',
     description: 'Full-stack developer position',
-    company: 'Tech Corp',
     location: 'Remote',
-    salary: '$80,000 - $120,000',
-    requirements: ['JavaScript', 'React', 'Node.js'],
-    jobType: 'Full-time',
-    experienceLevel: 'Mid-level',
+    requiredSkills: ['JavaScript', 'React', 'Node.js'],
     isActive: true,
     createdBy: '507f1f77bcf86cd799439011',
     createdAt: new Date('2024-01-01')
