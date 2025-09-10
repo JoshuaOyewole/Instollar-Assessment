@@ -33,7 +33,7 @@ const Navbar = () => {
               <Zap className="w-5 h-5 text-white" />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-[#0e3e33] to-[#0b2b29] bg-clip-text text-transparent">
-              InstolConnect
+              InstollConnect
             </span>
           </Link>
 
