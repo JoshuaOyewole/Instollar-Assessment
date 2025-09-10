@@ -115,10 +115,15 @@ function AdminJobsPage() {
               </div>
 
               <p className="text-gray-700 mb-4 line-clamp-2">{job.description}</p>
-
-              <div className="text-sm text-gray-500">
-                Created on {new Date(job.createdAt).toLocaleDateString()}
+              <div className="flex justify-between items-center">
+                <div className="text-sm text-gray-500">
+                  Created on {new Date(job.createdAt).toLocaleDateString()}
+                </div>
+                <Link href={`/admin/jobs/${job.id}`} className="text-blue-600 font-medium border rounded-md px-2 py-1 hover:text-blue-800">
+                  View Details
+                </Link>
               </div>
+
             </div>
           ))
         )}
