@@ -1,4 +1,4 @@
-# Instollar - Job Matching Platform
+# InstollConnect - Job Matching Platform (Assessment for FullStack Developer Role at Instollar)
 
 A comprehensive full-stack job-matching platform built with Next.js 15, Node.js/Express, and MongoDB Atlas. This application connects talented professionals with job opportunities through advanced role-based authentication, middleware protection, and intelligent job-user matching with a modern glassmorphism UI design.
 
@@ -15,28 +15,20 @@ A comprehensive full-stack job-matching platform built with Next.js 15, Node.js/
 
 ### Job Management
 - **Public Job Browsing**: View all active job listings with detailed information
-- **Advanced Job Details**: Comprehensive job pages with company info, requirements, and application status
 - **Admin Job Management**:
-  - Create, edit, and delete job postings
+  - Create, and delete job postings
   - Advanced job validation and management
-  - Job status tracking and analytics
 - **Responsive Job Cards**: Modern card-based design with salary formatting and experience indicators
 
 ### Advanced Matching System
 - **Smart Job Matching**: Admin-controlled matching between talents and suitable positions
 - **Application Management**: 
-  - Talents can apply to matched jobs
-  - Application status tracking
   - Duplicate application prevention
 - **Match Analytics**: Dashboard insights and match success tracking
-- **Notification System**: Real-time updates on new matches and applications
 
 ### Modern Admin Dashboard
 - **Glassmorphism Design**: Beautiful, modern UI with gradient effects and glass morphism
-- **Comprehensive Analytics**: Job statistics, user metrics, and platform insights
 - **Quick Actions**: Fast access to common administrative tasks
-- **Recent Activity**: Monitor latest applications, matches, and user activity
-- **User Management**: View and manage talent profiles and admin users
 
 ## 🛠 Tech Stack
 
@@ -58,7 +50,6 @@ A comprehensive full-stack job-matching platform built with Next.js 15, Node.js/
 - **Joi 18.0.1** and **Zod 4.1.5** for validation
 - **Helmet 8.1.0** for security headers
 - **CORS 2.8.5** for cross-origin requests
-- **Jest 29.7.0** for comprehensive testing
 
 ### Architecture
 - **Repository Pattern**: Clean separation of data access
@@ -131,9 +122,6 @@ instollar/
 │   │   ├── AuthValidator.js           # Auth input validation
 │   │   ├── JobValidator.js            # Job input validation
 │   │   └── MatchValidator.js          # Match input validation
-│   ├── tests/                         # Comprehensive Test Suite
-│   │   ├── setup.js                   # Test environment setup
-│   │   └── *.test.js                  # Unit & integration tests
 │   ├── database/
 │   │   └── db.js                      # MongoDB Atlas connection
 │   ├── utils/
@@ -219,14 +207,11 @@ instollar/
 
 2. **Job Discovery**
    - Browse all active job listings
-   - View detailed job information with company details
-   - See salary ranges, experience requirements, and job descriptions
+   - View detailed job descriptions
    - Apply to jobs you're interested in (prevents duplicate applications)
 
 3. **Match Management**
    - View jobs matched to your profile in "My Matches"
-   - Apply to matched opportunities with one click
-   - Track application status and history
 
 ### For Admins (HR/Recruiters)
 
@@ -237,15 +222,10 @@ instollar/
 
 2. **Job Management**
    - Create new job postings with detailed requirements
-   - Edit existing job listings and requirements
-   - Delete outdated or filled positions
-   - Monitor job performance and application statistics
+   - Delete Job
 
 3. **Talent Matching**
-   - Browse talent profiles and qualifications
    - Create strategic matches between talents and suitable jobs
-   - Monitor match success rates and application outcomes
-   - Manage the entire hiring pipeline
 
 4. **Dashboard Analytics**
    - View platform statistics and insights
@@ -265,21 +245,15 @@ instollar/
 - `GET /api/jobs` - Get all active jobs (public access)
 - `GET /api/jobs/:id` - Get detailed job information (public)
 - `POST /api/jobs` - Create new job posting (admin only)
-- `PUT /api/jobs/:id` - Update existing job (admin only)
 - `DELETE /api/jobs/:id` - Delete job posting (admin only)
 
 ### User Management Routes
 - `GET /api/users` - Get users with role filtering (admin only)
-- `GET /api/users/:id` - Get specific user details (protected)
-- `PUT /api/users/:id` - Update user profile (protected)
 - `GET /api/users?role=talent` - Filter users by role
 
 ### Match Management Routes
 - `POST /api/matches` - Create job-talent match (admin only)
 - `GET /api/matches/my-matches` - Get talent's matched jobs (talent only)
-- `GET /api/matches/:id` - Get specific match details (protected)
-- `PUT /api/matches/:id/apply` - Apply to matched job (talent only)
-- `GET /api/matches/check/:jobId` - Check application status (talent only)
 
 ### Admin Dashboard Routes
 - `GET /api/admin/stats` - Get platform statistics (admin only)
@@ -312,30 +286,12 @@ instollar/
    - Backend API: `http://localhost:5000/api`
    - API Documentation: Available in TESTING.md
 
-### Testing
-
-**Run Backend Tests:**
-```bash
-cd backend
-npm test                    # Run all tests
-npm run test:watch          # Run tests in watch mode
-npm run test:coverage       # Generate coverage report
-```
-
-**Test Coverage Includes:**
-- Authentication controller tests
-- Job service and repository tests
-- Match service tests  
-- User management tests
-- Middleware authentication tests
-
 ### Development Tools
 
 **Useful npm Scripts:**
 ```bash
 # Backend
 npm run dev         # Development with nodemon
-npm run test        # Jest testing suite
 npm start          # Production server
 
 # Frontend
@@ -350,61 +306,6 @@ npm run lint       # ESLint checking
 - MongoDB Atlas connection with debug logging (can be toggled)
 - JWT tokens with configurable expiration
 
-### Database Models
-
-#### User Model (`models/User.js`)
-```javascript
-{
-  email: String (unique, validated),
-  password: String (hashed with bcrypt),
-  name: String (required),
-  role: String (enum: ["talent", "admin"]),
-  profile: {
-    skills: [String],
-    experience: String,
-    location: String
-  },
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-#### Job Model (`models/Job.js`)
-```javascript
-{
-  title: String (required),
-  description: String (required),
-  company: String (required),
-  location: String (required),
-  salary: {
-    min: Number,
-    max: Number,
-    currency: String
-  },
-  jobType: String (enum: ["full-time", "part-time", "contract"]),
-  experienceLevel: String (enum: ["entry", "mid", "senior"]),
-  requirements: [String],
-  benefits: [String],
-  isActive: Boolean (default: true),
-  createdBy: ObjectId (ref: User - admin),
-  createdAt: Date,
-  updatedAt: Date
-}
-```
-
-#### Match Model (`models/Match.js`)
-```javascript
-{
-  jobId: ObjectId (ref: Job),
-  userId: ObjectId (ref: User - talent),
-  matchedBy: ObjectId (ref: User - admin),
-  status: String (enum: ["pending", "applied", "rejected"]),
-  appliedAt: Date,
-  notes: String,
-  createdAt: Date,
-  updatedAt: Date
-}
-```
 
 ## 🛡 Advanced Security Features
 
@@ -470,19 +371,6 @@ npm start
    JWT_SECRET=your-production-jwt-secret
    JWT_EXPIRE=7d
    ```
-3. Deploy with automatic builds
-
-**Docker Deployment:**
-```dockerfile
-# Backend Dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 5000
-CMD ["npm", "start"]
-```
 
 ### Database Setup (MongoDB Atlas)
 1. Create MongoDB Atlas cluster
@@ -506,15 +394,11 @@ CMD ["npm", "start"]
 
 ### ✅ Job Management System  
 - [x] Public job browsing with detailed views
-- [x] Admin job creation, editing, and deletion
-- [x] Advanced job filtering and search
+- [x] Admin job creation, and deletion
 - [x] Responsive job cards with modern design
-- [x] Salary formatting and experience indicators
 
 ### ✅ Matching & Application System
 - [x] Admin-controlled job-talent matching
-- [x] One-click job applications for talents
-- [x] Application status tracking
 - [x] Duplicate application prevention
 - [x] Match analytics and insights
 
@@ -531,13 +415,6 @@ CMD ["npm", "start"]
 - [x] Loading states and error handling
 - [x] Toast notifications
 - [x] Modern iconography with Lucide React
-
-### ✅ Testing & Quality Assurance
-- [x] Comprehensive Jest test suite
-- [x] Controller and service testing
-- [x] Repository pattern testing
-- [x] Code coverage reporting
-- [x] Continuous integration ready
 
 ## 📝 Contributing
 
@@ -561,7 +438,6 @@ CMD ["npm", "start"]
 
 4. **Make Changes & Test**
    ```bash
-   # Run tests
    cd backend && npm test
    # Test locally
    npm run dev
@@ -593,12 +469,11 @@ For support or questions, please open an issue in the repository or contact the 
 ## 📞 Support & Contact
 
 - **GitHub Issues**: For bug reports and feature requests
-- **Documentation**: Comprehensive API documentation in `/backend/TESTING.md`
 - **Developer**: Joshua Oyewole
-- **Project**: Instollar Job Matching Platform
+- **Project**: InstollConnect Job Matching Platform
 
 ---
 
 **🚀 Built with passion using Next.js 15, Node.js, MongoDB Atlas, and modern web technologies**
 
-*Instollar - Connecting talent with opportunity through intelligent job matching* ✨
+*InstollConnect - Connecting talent with opportunity through intelligent job matching* ✨
