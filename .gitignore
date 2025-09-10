@@ -6,3 +6,7 @@ TESTING.md
 /frontend/node_modules
 /backend/env
 /backend/run-tests.js
+.gitignore
+
+backend/dist/
+frontend/next/

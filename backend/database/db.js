@@ -1,6 +1,6 @@
 "use strict";
 const mongoose = require("mongoose");
-//mongoose.set("debug", true); // for debug logs
+mongoose.set("debug", true); // for debug logs
 
 const mongodbUrl = `${process.env.MONGODB_URL}/${process.env.DATABASE_NAME}?retryWrites=true`;
 
