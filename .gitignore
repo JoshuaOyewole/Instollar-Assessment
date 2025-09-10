@@ -1,0 +1,8 @@
+.env
+.env.local
+.env.production
+TESTING.md
+/backend/node_modules
+/frontend/node_modules
+/backend/env
+/backend/run-tests.js
