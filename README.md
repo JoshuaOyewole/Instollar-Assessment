@@ -229,8 +229,6 @@ instollar/
 
 4. **Dashboard Analytics**
    - View platform statistics and insights
-   - Monitor user activity and engagement
-   - Track job posting performance
    - Access quick action shortcuts for common tasks
 
 ## 🔐 API Endpoints
@@ -242,23 +240,19 @@ instollar/
 - `POST /api/auth/logout` - Secure logout with token invalidation
 
 ### Job Management Routes
-- `GET /api/jobs` - Get all active jobs (public access)
+- `GET /api/jobs` - Get all jobs (public access)
 - `GET /api/jobs/:id` - Get detailed job information (public)
 - `POST /api/jobs` - Create new job posting (admin only)
 - `DELETE /api/jobs/:id` - Delete job posting (admin only)
 
 ### User Management Routes
-- `GET /api/users` - Get users with role filtering (admin only)
-- `GET /api/users?role=talent` - Filter users by role
+- `GET /api/users` - Get All users (admin only)
+- `GET /api/users?role=talent` - Filter users by role (admin only)
+- `GET /api/users?role=admin` - Filter users by role (admin only)
 
 ### Match Management Routes
 - `POST /api/matches` - Create job-talent match (admin only)
 - `GET /api/matches/my-matches` - Get talent's matched jobs (talent only)
-
-### Admin Dashboard Routes
-- `GET /api/admin/stats` - Get platform statistics (admin only)
-- `GET /api/admin/recent-activity` - Get recent platform activity (admin only)
-- `GET /api/admin/users` - Get all users with management options (admin only)
 
 ## 🔧 Development Guide
 
