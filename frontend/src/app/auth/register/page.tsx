@@ -149,7 +149,7 @@ function RegisterForm() {
             onChange={handleChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#0e3e33] dark:text-gray-800"
           >
-            <option value="talent" className=' text-sm'>Job Seeker (e.g Installer)</option>
+            <option value="talent" className=' text-sm'>Talent (e.g Installer)</option>
             <option value="admin" className=' text-sm'>Admin</option>
           </select>
         </div>
