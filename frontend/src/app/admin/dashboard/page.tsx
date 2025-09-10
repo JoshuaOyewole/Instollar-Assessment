@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import { jobsAPI, matchesAPI } from '@/lib/api';
+import { jobsAPI, matchesAPI, usersAPI } from '@/lib/api';
 import Link from 'next/link';
-import { 
-  Users, 
-  Briefcase, 
-  UserCheck, 
-  TrendingUp, 
+import {
+  Users,
+  Briefcase,
+  UserCheck,
+  TrendingUp,
   Eye,
   Plus,
   Activity,
@@ -47,24 +47,28 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      
+
       // Fetch jobs data
       const jobsResponse = await jobsAPI.getAll();
       const jobs = jobsResponse.data.data || [];
-      
+
       // Fetch matches data
       const matchesResponse = await matchesAPI.getAll();
       const matches = matchesResponse.data.data || [];
 
+      //Fetch users count
+      const usersResponse = await usersAPI.getAllTalents();
+      const usersCount = usersResponse.data.data || []
+      
       setStats({
         totalJobs: jobs.length,
         activeJobs: jobs.filter((job: any) => job.isActive).length,
         totalMatches: matches.length,
-        totalTalents: new Set(matches.map((match: any) => match.userId?._id)).size,
+        totalTalents: usersCount.length,
         recentMatches: matches.slice(0, 5),
         recentJobs: jobs.slice(0, 5)
       });
-      
+
     } catch (error) {
       console.error('Error fetching dashboard data:', error);
     } finally {
@@ -128,7 +132,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-        {/*   <div className="group relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
+          {/*   <div className="group relative bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300">
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-emerald-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="relative flex items-center justify-between">
               <div>
@@ -182,8 +186,8 @@ export default function AdminDashboard() {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-          <Link 
-            href="/admin/jobs/create" 
+          <Link
+            href="/admin/jobs/create"
             className="group relative bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -201,8 +205,8 @@ export default function AdminDashboard() {
             </div>
           </Link>
 
-          <Link 
-            href="/admin/jobs" 
+          <Link
+            href="/admin/jobs"
             className="group relative bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-emerald-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -220,8 +224,8 @@ export default function AdminDashboard() {
             </div>
           </Link>
 
-          <Link 
-            href="/admin/matches" 
+          <Link
+            href="/admin/matches"
             className="group relative bg-white/80 backdrop-blur-lg p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl hover:scale-105 transition-all duration-300 overflow-hidden"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-pink-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -252,7 +256,7 @@ export default function AdminDashboard() {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Recent Matches</h3>
                 </div>
-            
+
               </div>
             </div>
             <div className="p-6">
@@ -277,11 +281,10 @@ export default function AdminDashboard() {
                           </div>
                         </div>
                       </div>
-                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                        match.status === 'matched' ? 'bg-blue-100 text-blue-800' :
+                      <span className={`px-3 py-1 text-xs font-medium rounded-full ${match.status === 'matched' ? 'bg-blue-100 text-blue-800' :
                         match.status === 'viewed' ? 'bg-yellow-100 text-yellow-800' :
-                        'bg-green-100 text-green-800'
-                      }`}>
+                          'bg-green-100 text-green-800'
+                        }`}>
                         {match.status}
                       </span>
                     </div>
@@ -308,7 +311,7 @@ export default function AdminDashboard() {
                   </div>
                   <h3 className="text-xl font-bold text-gray-900">Recent Jobs</h3>
                 </div>
-              
+
               </div>
             </div>
             <div className="p-6">
