@@ -1,8 +1,11 @@
 "use strict";
 const mongoose = require("mongoose");
-mongoose.set("debug", true); // for debug logs
+//mongoose.set("debug", true); // enable if you need debug logs
 
-const mongodbUrl = `${process.env.MONGODB_URL}/${process.env.DATABASE_NAME}?retryWrites=true`;
+// Fix the connection string format for MongoDB Atlas
+const mongodbUrl = process.env.MONGODB_URL.includes('mongodb+srv://') 
+  ? `${process.env.MONGODB_URL}/${process.env.DATABASE_NAME}?retryWrites=true&w=majority`
+  : `${process.env.MONGODB_URL}/${process.env.DATABASE_NAME}?retryWrites=true`;
 
 mongoose.connect(mongodbUrl, {});
 
