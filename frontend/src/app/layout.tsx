@@ -14,8 +14,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "JobMatch - Find Your Dream Job",
-  description: "AI-powered job matching platform connecting talented professionals with amazing opportunities",
+  title: "InstollConnect- No 1 job match portal",
+  description: "Job matching platform connecting talented professionals with amazing opportunities",
 };
 
 export default function RootLayout({
