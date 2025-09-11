@@ -12,6 +12,7 @@ import {
   Eye,
   Calendar,
   MapPin,
+  Wrench,
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 
@@ -21,11 +22,16 @@ interface Application {
     _id: string;
     title: string;
     location: string;
+    requiredSkills?: string[];
+    description?: string;
   };
   userId: {
     _id: string;
     name: string;
     email: string;
+    role: string;
+    location?: string;
+    skills?: string[];
   };
   status: 'pending' | 'matched' | 'rejected' | 'withdrawn';
   appliedAt: string;
@@ -48,7 +54,12 @@ export default function AdminApplicationsPage() {
       setLoading(true);
       const params = filter !== 'all' ? { status: filter } : {};
       const response = await applicationsAPI.getAll(params);
-      setApplications(response.data.data || []);
+      const applications = response.data.data || [];
+      console.log('Fetched applications:', applications);
+      if (applications.length > 0) {
+        console.log('First application jobId:', applications[0].jobId);
+      }
+      setApplications(applications);
     } catch (error) {
       console.error('Error fetching applications:', error);
       setError('Failed to load applications');
@@ -174,18 +185,14 @@ export default function AdminApplicationsPage() {
                 className="bg-white/80 backdrop-blur-sm rounded-xl p-6 shadow-xl border border-white/20 hover:shadow-2xl hover:scale-[1.02] transition-all duration-300"
               >
                 {/* Application Header */}
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start justify-between mb-6">
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900 mb-1">
                       {application.jobId.title}
                     </h3>
-                  
-                    <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
-                      <div className="flex items-center">
-                        <MapPin className="w-4 h-4 mr-1" />
-                        {application.jobId.location}
-                      </div>
-                    
+                    <div className="flex items-center space-x-2 text-sm text-gray-500">
+                      <Calendar className="w-4 h-4" />
+                      <span>Applied {formatDate(application.appliedAt)}</span>
                     </div>
                   </div>
                   <div className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(application.status)}`}>
@@ -193,21 +200,132 @@ export default function AdminApplicationsPage() {
                   </div>
                 </div>
 
-                {/* Applicant Info */}
-                <div className="bg-gray-50/80 backdrop-blur-sm rounded-lg p-4 mb-4">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <User className="w-5 h-5 text-gray-600" />
+                {/* Job Details Section */}
+                <div className="bg-blue-50/80 backdrop-blur-sm rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
+                    <Briefcase className="w-4 h-4 mr-2 text-blue-600" />
+                    Job Requirements
+                  </h4>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-start space-x-2">
+                      <MapPin className="w-4 h-4 mt-0.5 text-gray-600 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Location</p>
+                        <p className="text-sm text-gray-600">{application.jobId.location}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start space-x-2">
+                      <Wrench className="w-4 h-4 mt-0.5 text-gray-600 flex-shrink-0" />
+                      <div>
+                        <p className="text-sm font-medium text-gray-700">Required Skills</p>
+                        {application.jobId.requiredSkills && application.jobId.requiredSkills.length > 0 ? (
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {application.jobId.requiredSkills.map((skill, index) => (
+                              <span
+                                key={index}
+                                className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <p className="text-sm text-gray-500 italic mt-1">No specific skills required</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Talent Details Section */}
+                <div className="bg-green-50/80 backdrop-blur-sm rounded-lg p-4 mb-4">
+                  <h4 className="font-semibold text-gray-900 mb-3 flex items-center">
+                    <User className="w-4 h-4 mr-2 text-green-600" />
+                    Talent Profile
+                  </h4>
+                  
+                  <div className="space-y-3">
                     <div>
                       <p className="font-semibold text-gray-900">{application.userId.name}</p>
                       <p className="text-sm text-gray-600">{application.userId.email}</p>
                     </div>
+                    
+                    {application.userId.location && (
+                      <div className="flex items-start space-x-2">
+                        <MapPin className="w-4 h-4 mt-0.5 text-gray-600 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">Location</p>
+                          <p className="text-sm text-gray-600">{application.userId.location}</p>
+                        </div>
+                      </div>
+                    )}
+                    
+                    {application.userId.skills && application.userId.skills.length > 0 && (
+                      <div className="flex items-start space-x-2">
+                        <Wrench className="w-4 h-4 mt-0.5 text-gray-600 flex-shrink-0" />
+                        <div>
+                          <p className="text-sm font-medium text-gray-700">Skills</p>
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {application.userId.skills.map((skill, index) => {
+                              // Check if this skill matches any required skill
+                              const isMatched = application.jobId.requiredSkills?.some(
+                                reqSkill => reqSkill.toLowerCase().includes(skill.toLowerCase()) || 
+                                           skill.toLowerCase().includes(reqSkill.toLowerCase())
+                              );
+                              
+                              return (
+                                <span
+                                  key={index}
+                                  className={`px-2 py-1 text-xs rounded-full ${
+                                    isMatched 
+                                      ? 'bg-green-100 text-green-800 ring-2 ring-green-300' 
+                                      : 'bg-gray-100 text-gray-800'
+                                  }`}
+                                  title={isMatched ? 'Matches job requirement' : ''}
+                                >
+                                  {skill}
+                                  {isMatched && <span className="ml-1">✓</span>}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                  <div className="flex items-center space-x-2 text-sm text-gray-500">
-                    <Calendar className="w-4 h-4" />
-                    <span>Applied {formatDate(application.appliedAt)}</span>
-                  </div>
-                
                 </div>
+
+                {/* Skills Match Summary */}
+                {application.jobId.requiredSkills && application.jobId.requiredSkills.length > 0 && application.userId.skills && (
+                  <div className="bg-yellow-50/80 backdrop-blur-sm rounded-lg p-3 mb-4">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-gray-700">Skills Match</span>
+                      <span className="text-sm text-gray-600">
+                        {application.userId.skills.filter(userSkill => 
+                          application.jobId.requiredSkills?.some(reqSkill => 
+                            reqSkill.toLowerCase().includes(userSkill.toLowerCase()) || 
+                            userSkill.toLowerCase().includes(reqSkill.toLowerCase())
+                          )
+                        ).length} of {application.jobId.requiredSkills.length} required skills
+                      </span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                      <div 
+                        className="bg-yellow-500 h-2 rounded-full" 
+                        style={{
+                          width: `${Math.min(100, (application.userId.skills.filter(userSkill => 
+                            application.jobId.requiredSkills?.some(reqSkill => 
+                              reqSkill.toLowerCase().includes(userSkill.toLowerCase()) || 
+                              userSkill.toLowerCase().includes(reqSkill.toLowerCase())
+                            )
+                          ).length / application.jobId.requiredSkills.length) * 100)}%`
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Action Buttons */}
                 <div className="flex items-center space-x-3">

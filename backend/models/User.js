@@ -28,6 +28,25 @@ const userSchema = new mongoose.Schema({
     enum: ["talent", "admin"],
     default: "talent",
   },
+  location: {
+    type: String,
+    required: function() {
+      return this.role === 'talent';
+    },
+    maxlength: 100,
+  },
+  skills: {
+    type: [String],
+    required: function() {
+      return this.role === 'talent';
+    },
+    validate: {
+      validator: function(skills) {
+        return this.role === 'admin' || (skills && skills.length > 0);
+      },
+      message: 'Talents must have at least one skill'
+    }
+  },
   createdAt: {
     type: Date,
     default: Date.now,

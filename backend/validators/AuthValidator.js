@@ -31,7 +31,26 @@ exports.createUser = async (body) => {
         role: Joi.string().valid('talent', 'admin').default('talent')
             .messages({
                 'any.only': 'Role must be either talent or admin'
-            })
+            }),
+        location: Joi.when('role', {
+            is: 'talent',
+            then: Joi.string().min(2).max(100).required().trim()
+                .messages({
+                    'string.min': 'Location must be at least 2 characters long',
+                    'string.max': 'Location cannot exceed 100 characters',
+                    'any.required': 'Location is required for talents'
+                }),
+            otherwise: Joi.string().optional()
+        }),
+        skills: Joi.when('role', {
+            is: 'talent',
+            then: Joi.array().items(Joi.string().min(1).max(50).trim()).min(1).required()
+                .messages({
+                    'array.min': 'At least one skill is required for talents',
+                    'any.required': 'Skills are required for talents'
+                }),
+            otherwise: Joi.array().optional()
+        })
     });
 
     return validate(schema, body);

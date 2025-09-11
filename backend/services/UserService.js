@@ -46,25 +46,42 @@ class UserService {
             }
 
             // Create new user
-            const user = await this.userRepository.create({
+            const userData = {
                 name: validation.data.name,
                 email: validation.data.email,
                 password: validation.data.password,
                 role: validation.data.role
-            });
+            };
+
+            // Add location and skills for talents
+            if (validation.data.role === 'talent') {
+                userData.location = validation.data.location;
+                userData.skills = validation.data.skills;
+            }
+
+            const user = await this.userRepository.create(userData);
 
             // Generate JWT token
             const token = this.generateToken(user);
 
+            // Prepare user response data
+            const userResponse = {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                createdAt: user.createdAt
+            };
+
+            // Add location and skills to response for talents
+            if (user.role === 'talent') {
+                userResponse.location = user.location;
+                userResponse.skills = user.skills;
+            }
+
             return {
                 data: {
-                    user: {
-                        userId: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        createdAt: user.createdAt
-                    },
+                    user: userResponse,
                     token: token
                 },
                 statusCode: StatusCodes.CREATED
@@ -129,15 +146,24 @@ class UserService {
             // Generate JWT token
             const token = this.generateToken(user);
 
+            // Prepare user response data
+            const userResponse = {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                createdAt: user.createdAt
+            };
+
+            // Add location and skills to response for talents
+            if (user.role === 'talent') {
+                userResponse.location = user.location;
+                userResponse.skills = user.skills;
+            }
+
             return {
                 data: {
-                    user: {
-                        userId: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        createdAt: user.createdAt
-                    },
+                    user: userResponse,
                     token: token
                 },
                 statusCode: StatusCodes.OK
@@ -172,15 +198,24 @@ class UserService {
                 };
             }
 
+            // Prepare user response data
+            const userResponse = {
+                userId: user._id,
+                name: user.name,
+                email: user.email,
+                role: user.role,
+                createdAt: user.createdAt
+            };
+
+            // Add location and skills to response for talents
+            if (user.role === 'talent') {
+                userResponse.location = user.location;
+                userResponse.skills = user.skills;
+            }
+
             return {
                 data: {
-                    user: {
-                        userId: user._id,
-                        name: user.name,
-                        email: user.email,
-                        role: user.role,
-                        createdAt: user.createdAt
-                    }
+                    user: userResponse
                 },
                 statusCode: StatusCodes.OK
             };

@@ -7,7 +7,7 @@ class ApplicationRepository {
       const application = new Application(applicationData);
       await application.save();
       await application.populate([
-        { path: "jobId", select: "title company location" },
+        { path: "jobId", select: "title location requiredSkills" },
         { path: "userId", select: "name email" },
       ]);
       return application;
@@ -20,8 +20,8 @@ class ApplicationRepository {
   async findByJobAndUser(jobId, userId) {
     try {
       return await Application.findOne({ jobId, userId }).populate([
-        { path: "jobId", select: "title company location" },
-        { path: "userId", select: "name email" },
+        { path: "jobId", select: "title location requiredSkills" },
+        { path: "userId", select: "name email role location skills" },
       ]);
     } catch (error) {
       throw error;
@@ -40,8 +40,8 @@ class ApplicationRepository {
 
       const applications = await Application.find(filter)
         .populate([
-          { path: "jobId", select: "title company location isActive" },
-          { path: "userId", select: "name email role" },
+          { path: "jobId", select: "title location isActive requiredSkills description" },
+          { path: "userId", select: "name email role location skills" },
           { path: "reviewedBy", select: "name" },
         ])
         .sort({ appliedAt: -1 })
@@ -66,7 +66,7 @@ class ApplicationRepository {
     try {
       return await Application.find({ userId })
         .populate([
-          { path: "jobId", select: "title company location isActive" },
+          { path: "jobId", select: "title location isActive requiredSkills" },
           { path: "reviewedBy", select: "name" },
         ])
         .sort({ appliedAt: -1 });
@@ -90,7 +90,7 @@ class ApplicationRepository {
       return await Application.findByIdAndUpdate(applicationId, updateData, {
         new: true,
       }).populate([
-        { path: "jobId", select: "title company location" },
+        { path: "jobId", select: "title location requiredSkills" },
         { path: "userId", select: "name email" },
         { path: "reviewedBy", select: "name" },
       ]);
