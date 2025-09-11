@@ -232,42 +232,6 @@ class UserService {
     }
 
     /**
-     * Get all talents (users with role 'talent')
-     * @param {Object} options - Query options
-     * @returns {Promise<Object>} - Service response object
-     */
-    async getAllTalents(options = {}) {
-        try {
-            const talents = await this.userRepository.findTalents({
-                select: 'name email createdAt',
-                ...options
-            });
-
-            return {
-                data: {
-                    talents: talents.map(talent => ({
-                        userId: talent._id,
-                        name: talent.name,
-                        email: talent.email,
-                        createdAt: talent.createdAt
-                    })),
-                    count: talents.length
-                },
-                statusCode: StatusCodes.OK
-            };
-        } catch (error) {
-            console.error("An unknown error occurred while fetching talents:", error);
-            return {
-                error: {
-                    message: "Internal server error occurred while fetching talents",
-                    details: error.message
-                },
-                statusCode: StatusCodes.INTERNAL_SERVER_ERROR
-            };
-        }
-    }
-
-    /**
      * Get users by role or all users
      * @param {Object} filters - Query filters (role, etc.)
      * @param {Object} options - Query options

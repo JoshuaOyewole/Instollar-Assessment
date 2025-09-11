@@ -36,6 +36,7 @@ export const jobsAPI = {
 
 //USERS API
 export const usersAPI = {
+  getAll: (params?: { role?: 'talent' | 'admin' }) => api.get('/users', { params }),
   getAllTalents: () => api.get('/users?role=talent'),
   getAllAdmins: () => api.get('/users?role=admin'),
   updateProfile: (userData: any) => api.put('/users/profile', userData),

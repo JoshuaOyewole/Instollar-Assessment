@@ -33,11 +33,6 @@ class UserRepository {
     return await dbQuery;
   }
 
-  //Find users with role 'talent'
-  async findTalents(options = {}) {
-    return await this.find({ role: "talent" }, options);
-  }
-
   // Update user by ID
   async updateById(id, updateData) {
     return await User.findByIdAndUpdate(id, updateData, { 
