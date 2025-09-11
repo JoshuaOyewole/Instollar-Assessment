@@ -10,6 +10,8 @@ interface User {
   name: string;
   email: string;
   role: 'talent' | 'admin';
+  location?: string;
+  skills?: string[];
 }
 
 interface AuthContextType {
@@ -19,6 +21,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<User>;
   register: (userData: any) => Promise<User>;
   logout: () => void;
+  updateUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -101,6 +104,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
+  const updateUser = async (): Promise<void> => {
+    try {
+      const response = await authAPI.getMe();
+      setUser(response.data.data);
+    } catch (error) {
+      console.error('Error updating user:', error);
+      // If token is invalid, clear it
+      cookieUtils.clearToken();
+      setToken(null);
+      setUser(null);
+    }
+  };
+
   const value = {
     user,
     token,
@@ -108,6 +124,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     login,
     register,
     logout,
+    updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

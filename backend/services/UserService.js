@@ -313,6 +313,85 @@ class UserService {
     }
 
     /**
+     * Update user profile
+     * @param {String} userId - User ID
+     * @param {Object} profileData - Profile data to update
+     * @returns {Promise<Object>} - Service response object
+     */
+    async updateProfile(userId, profileData) {
+        try {
+            const { name, email, location, skills } = profileData;
+
+            // Find the user first
+            const existingUser = await this.userRepository.findById(userId);
+            if (!existingUser) {
+                return {
+                    error: {
+                        message: "User not found"
+                    },
+                    statusCode: StatusCodes.NOT_FOUND
+                };
+            }
+
+            // Validate that email is unique if it's being changed
+            if (email && email !== existingUser.email) {
+                const emailExists = await this.userRepository.findOne({ email });
+                if (emailExists) {
+                    return {
+                        error: {
+                            message: "Email already in use"
+                        },
+                        statusCode: StatusCodes.CONFLICT
+                    };
+                }
+            }
+
+            // Prepare update data
+            const updateData = {};
+            if (name) updateData.name = name;
+            if (email) updateData.email = email;
+            
+            // Only update location and skills for talents
+            if (existingUser.role === 'talent') {
+                if (location !== undefined) updateData.location = location;
+                if (skills !== undefined) updateData.skills = skills;
+            }
+
+            // Update the user
+            const updatedUser = await this.userRepository.updateById(userId, updateData);
+
+            // Prepare user response data (exclude sensitive fields)
+            const userResponse = {
+                id: updatedUser._id,
+                name: updatedUser.name,
+                email: updatedUser.email,
+                role: updatedUser.role,
+                ...(updatedUser.role === 'talent' && {
+                    location: updatedUser.location,
+                    skills: updatedUser.skills
+                })
+            };
+
+            return {
+                data: {
+                    user: userResponse
+                },
+                statusCode: StatusCodes.OK
+            };
+
+        } catch (error) {
+            console.error("UserService.updateProfile error:", error);
+            return {
+                error: {
+                    message: "Error updating profile",
+                    details: error.message
+                },
+                statusCode: StatusCodes.INTERNAL_SERVER_ERROR
+            };
+        }
+    }
+
+    /**
      * Generate JWT token for user
      * @param {Object} user - User object with id, role, etc.
      * @returns {String} - JWT token

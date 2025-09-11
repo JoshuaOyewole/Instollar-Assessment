@@ -37,6 +37,14 @@ class UserRepository {
   async findTalents(options = {}) {
     return await this.find({ role: "talent" }, options);
   }
+
+  // Update user by ID
+  async updateById(id, updateData) {
+    return await User.findByIdAndUpdate(id, updateData, { 
+      new: true, 
+      runValidators: true 
+    });
+  }
 }
 
 module.exports = UserRepository;

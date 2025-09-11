@@ -38,6 +38,7 @@ export const jobsAPI = {
 export const usersAPI = {
   getAllTalents: () => api.get('/users?role=talent'),
   getAllAdmins: () => api.get('/users?role=admin'),
+  updateProfile: (userData: any) => api.put('/users/profile', userData),
 };
 // Matches API
 export const matchesAPI = {

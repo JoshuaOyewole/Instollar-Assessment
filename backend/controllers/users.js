@@ -37,3 +37,40 @@ exports.getUsers = async (req, res) => {
     });
   }
 };
+
+// @desc    Update user profile
+// @route   PUT /api/users/profile
+// @access  Private
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { name, email, location, skills } = req.body;
+
+    const result = await UserService.updateProfile(userId, {
+      name,
+      email,
+      location,
+      skills
+    });
+
+    if (result.error) {
+      return res.status(result.statusCode).json({
+        status: false,
+        message: result.error.message,
+        errors: result.error.details || null
+      });
+    }
+
+    res.status(result.statusCode).json({
+      status: true,
+      message: 'Profile updated successfully',
+      data: result.data.user
+    });
+  } catch (error) {
+    console.error('UpdateProfile controller error:', error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: false,
+      message: 'Server Error'
+    });
+  }
+};

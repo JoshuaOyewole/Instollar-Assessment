@@ -110,7 +110,16 @@ const Navbar = () => {
                         <div className="text-xs text-gray-500">{user.email || `${user.role}@jobmatch.com`}</div>
                       </div>
 
-
+                      {user.role === 'talent' && (
+                        <Link
+                          href="/profile/edit"
+                          onClick={() => setIsUserDropdownOpen(false)}
+                          className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        >
+                          <User size={16} />
+                          <span>Edit Profile</span>
+                        </Link>
+                      )}
 
                       <div className="border-t border-gray-100 pt-1">
                         <button
@@ -193,14 +202,24 @@ const Navbar = () => {
               </Link>
 
               {user.role === 'talent' && (
-                <Link
-                  href="/my-matches"
-                  className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <Users size={20} />
-                  <span>My Matches</span>
-                </Link>
+                <>
+                  <Link
+                    href="/my-matches"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <Users size={20} />
+                    <span>My Matches</span>
+                  </Link>
+                  <Link
+                    href="/profile/edit"
+                    className="flex items-center space-x-2 text-gray-700 hover:text-teal-600 hover:bg-teal-50 px-4 py-2 rounded-xl transition-all duration-200 font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User size={20} />
+                    <span>Edit Profile</span>
+                  </Link>
+                </>
               )}
 
               {user.role === 'admin' && (
